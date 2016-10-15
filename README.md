@@ -6,5 +6,5 @@
 More portable, simpler. A options framework for WordPress themes.
 
 ## Get Started
-
-Include 'options/theme-options-loader.php' to functions.php
+ - You must place "options" directory to your theme directory. 
+ - And then, include "options/theme-options-loader.php" in the Wordpress "functions.php".
