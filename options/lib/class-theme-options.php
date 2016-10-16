@@ -32,10 +32,9 @@ class Theme_Options {
 		if ( ! empty( $options ) ) {
 			foreach ( $options as $addon_id => $is_active ) {
 				if ( 'on' === $is_active ) {
-					$this->addons_actived[ $addon_id ]['config'] = Config::get( $addon_id );
-					$this->addons_actived[ $addon_id ]['addon'] = new Addon( $addon_id, $this->config['loader_id'], $this->addons_actived[ $addon_id ]['config'] ); // Load add-on.
+					$this->addons_actived[ $addon_id ] = new Addon( $addon_id, $this->config['loader_id'], Config::get( $addon_id ) ); // Load add-on.
 					require_once( ADDON_PATH . '/' . $addon_id . '/' . $addon_id . '.php' );
-					LoginPage\Login_Page::get_instance( $this->addons_actived[ $addon_id ]['addon'] );
+					LoginPage\Login_Page::get_instance( $this->addons_actived[ $addon_id ] );
 				}
 			}
 		}
@@ -95,7 +94,7 @@ class Theme_Options {
 		if ( ! empty( $options ) ) {
 			foreach ( $options as $addon_id => $is_active ) {
 				if ( 'on' === $is_active ) {
-					$this->addons_actived[ $addon_id ]['addon']->initialize();
+					$this->addons_actived[ $addon_id ]->initialize();
 				}
 			}
 		}
@@ -120,7 +119,7 @@ class Theme_Options {
 			if ( ! empty( $options ) ) {
 				foreach ( $options as $addon_id => $is_active ) {
 					if ( 'on' === $is_active ) {
-						echo '<a href="#panel-' , $addon_id , '" class="mdl-tabs__tab">' , $this->addons_actived[ $addon_id ]['addon']->display_name , '</a>';
+						echo '<a href="#panel-' , $addon_id , '" class="mdl-tabs__tab">' , $this->addons_actived[ $addon_id ]->display_name , '</a>';
 					}
 				}
 			}
@@ -139,9 +138,9 @@ class Theme_Options {
 						foreach ( $options as $addon_id => $is_active ) {
 							if ( 'on' === $is_active ) {
 								echo '<div class="mdl-tabs__panel" id="panel-' , $addon_id , '">';
-								echo '<form method="post" action="' , esc_html( $this->addons_actived[ $addon_id ]['addon']->form_action ), '" id="' , $this->addons_actived[ $addon_id ]['addon']->options_name, '">';
-								$this->addons_actived[ $addon_id ]['addon']->fill_fields();
-								submit_button( __( 'Save Changes', 'sanpeity' ), 'primary large', 'submit', true, array( 'form' => $this->addons_actived[ $addon_id ]['addon']->options_name ) );
+								echo '<form method="post" action="' , esc_html( $this->addons_actived[ $addon_id ]->form_action ), '" id="' , $this->addons_actived[ $addon_id ]->options_name, '">';
+								$this->addons_actived[ $addon_id ]->fill_fields();
+								submit_button( __( 'Save Changes', 'sanpeity' ), 'primary large', 'submit', true, array( 'form' => $this->addons_actived[ $addon_id ]->options_name ) );
 								echo '</form>';
 								echo '</div>';
 							}
