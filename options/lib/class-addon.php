@@ -8,13 +8,20 @@ class Addon implements Interface_Addon {
 
 	private $obj_options;
 
+	private $config;
+	private $options_page;
+	private $options_group;
+
 	private $display_name;
 	private $form_action;
 	private $options_name;
 
-	public function __construct( $addon_id, $loader_id ) {
 
-		$config = Config::get( $addon_id );
+	public function __construct( $addon_id, $loader_id, &$config ) {
+
+		$this->config = $config;
+		$this->options_page = $loader_id . '_' . $addon_id;
+		$this->options_group = $loader_id . '_' . $addon_id;
 
 		$this->obj_options = $config['obj_options'];
 
@@ -22,12 +29,15 @@ class Addon implements Interface_Addon {
 		$this->form_action = $this->obj_options->FORM_ACTION;
 		$this->options_name = $config['domain'] . '_' . $loader_id . '_' . $addon_id;
 
+	}
+
+	public function initialize() {
 		$this->obj_options->initialize(
-			$loader_id . '_' . $addon_id,
-			$loader_id . '_' . $addon_id,
-			$config['setting_sections'],
+			$this->options_page,
+			$this->options_group,
+			$this->config['setting_sections'],
 			$this->options_name,
-			$config['input_fields']
+			$this->config['input_fields']
 		);
 	}
 
@@ -42,6 +52,8 @@ class Addon implements Interface_Addon {
 			return $this->form_action;
 		} elseif ( 'options_name' === $property_name ) {
 			return $this->options_name;
+		} elseif ( 'obj_options' === $property_name ) {
+			return $this->obj_options;
 		}
 	}
 

@@ -33,6 +33,7 @@ if ( ! defined( 'ADMIN_DIR__' ) ) {
 const ADMIN_DIR = ADMIN_DIR__;
 
 const ADDON_PATH = ADMIN_PATH . '/addons';
+const ADDON_DIR = ADMIN_DIR . '/addons';
 const LIB_PATH = ADMIN_PATH . '/lib';
 const JS_DIR = ADMIN_DIR . '/assets/js';
 const JS_PATH = ADMIN_PATH . '/assets/js';

@@ -136,9 +136,16 @@ if ( ! class_exists( 'Wp_Settings' ) ) {
 								<input class="mdl-textfield__input" type="text" id="' , $field_id . '" name="' , $field_name, '" value="' , $value , '">
 									<label class="mdl-textfield__label" for="' , $field_id , '">', $input_label , '</label>
 									</div>';
-					echo ' <button id="choose-image" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">', esc_html__( 'Choose image', 'sanpeity' ) , '</button>';
+					echo ' <button id="choose-image-' . $field_id . '" class="media-button mdl-button mdl-js-button mdl-button--raised mdl-button--colored">', esc_html__( 'Choose image', 'sanpeity' ) , '</button>';
 					echo '<div id="image-preview"></div>';
 					break;
+					case 'hidden':
+						$value = '';
+						if ( isset( $options[ $field_id ] ) ) {
+							$value = esc_attr( $options[ $field_id ] );
+						}
+						echo '<input type="hidden" id="choose-image-' , $field_id , '"name="' , $this->options_name , '[' , $field_id , ']' . '" value="' , $value , '"></div>';
+						break;
 				default:
 					break;
 			}

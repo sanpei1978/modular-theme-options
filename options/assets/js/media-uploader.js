@@ -1,11 +1,6 @@
 jQuery(document).ready(function($) {
-	var custom_uploader;
-	$('#choose-image').click(function(e) {
+	$('.media-button').click(function(e) {
 		e.preventDefault();
-		if (custom_uploader) {
-			custom_uploader.open();
-			return;
-		}
 		custom_uploader = wp.media({
 			title: 'Choose Image',
 			library: {
@@ -19,8 +14,9 @@ jQuery(document).ready(function($) {
 		custom_uploader.on('select', function() {
 			var images = custom_uploader.state().get('selection');
 			images.each(function(file){
-				$('#image-preview').append('<img src="'+file.toJSON().url+'" style="width:360px;"/>');
-				$('#media-upload').val(file.toJSON().url);
+				$(e.currentTarget).next().append('<img src="'+file.toJSON().url+'" style="width:360px;"/>');
+				$(e.currentTarget).prev().children('input').val(file.toJSON().url);
+				$("#" + e.currentTarget.id + "_h").val(file.toJSON().height);
 			});
 		});
 		custom_uploader.open();

@@ -25,17 +25,24 @@ return [
 	],
 	'input_fields' => [
 		[
-			'id' => 'media-upload',
-			'title' => __( 'Upload image', 'sanpeity' ),
+			'id' => 'media-upload-bg_img',
+			'title' => __( 'Choose background image', 'sanpeity' ),
 			'type' => 'media',
 			'label' => __( 'Place of a image file', 'sanpeity' ),
 			'section' => 'setting_section_login_page_1',
 		],
 		[
-			'id' => 'css-pass',
-			'title' => __( 'Other', 'sanpeity' ),
-			'type' => 'text',
-			'label' => __( 'Text', 'sanpeity' ),
+			'id' => 'media-upload-logo_img',
+			'title' => __( 'Choose logo image', 'sanpeity' ),
+			'type' => 'media',
+			'label' => __( 'Place of a image file', 'sanpeity' ),
+			'section' => 'setting_section_login_page_1',
+		],
+		[
+			'id' => 'media-upload-logo_img_h',
+			'title' => '',
+			'type' => 'hidden',
+			'label' => '',
 			'section' => 'setting_section_login_page_1',
 		],
 		[

@@ -27,6 +27,18 @@ class Theme_Options {
 		add_action( 'load-themes.php', array( $this, 'activate_admin_notice' ) );
 		add_action( 'admin_init', array( $this, 'initialize_theme_admin' ) );
 		add_action( 'admin_menu', array( $this, 'register_admin_menu' ) );
+
+		$options = $this->obj_options->get_option( $this->options_name );
+		if ( ! empty( $options ) ) {
+			foreach ( $options as $addon_id => $is_active ) {
+				if ( 'on' === $is_active ) {
+					$this->addons_actived[ $addon_id ]['config'] = Config::get( $addon_id );
+					$this->addons_actived[ $addon_id ]['addon'] = new Addon( $addon_id, $this->config['loader_id'], $this->addons_actived[ $addon_id ]['config'] ); // Load add-on.
+					require_once( ADDON_PATH . '/' . $addon_id . '/' . $addon_id . '.php' );
+					LoginPage\Login_Page::get_instance( $this->addons_actived[ $addon_id ]['addon'] );
+				}
+			}
+		}
 	}
 
 	public function activate_admin_notice() {
@@ -81,9 +93,9 @@ class Theme_Options {
 
 		$options = $this->obj_options->get_option( $this->options_name );
 		if ( ! empty( $options ) ) {
-			foreach ( $options as $key => $value ) {
-				if ( 'on' === $value ) {
-					$this->addons_actived[ $key ] = new Addon( $key, $this->config['loader_id'] ); // Load add-on.
+			foreach ( $options as $addon_id => $is_active ) {
+				if ( 'on' === $is_active ) {
+					$this->addons_actived[ $addon_id ]['addon']->initialize();
 				}
 			}
 		}
@@ -106,9 +118,9 @@ class Theme_Options {
 					<a href="#panel-setting" class="mdl-tabs__tab is-active"><?php echo esc_html( $this->config['display_name'] ); ?></a>
 			<?php
 			if ( ! empty( $options ) ) {
-				foreach ( $options as $key => $value ) {
-					if ( 'on' === $value ) {
-						echo '<a href="#panel-' , $key , '" class="mdl-tabs__tab">' , $this->addons_actived[ $key ]->display_name , '</a>';
+				foreach ( $options as $addon_id => $is_active ) {
+					if ( 'on' === $is_active ) {
+						echo '<a href="#panel-' , $addon_id , '" class="mdl-tabs__tab">' , $this->addons_actived[ $addon_id ]['addon']->display_name , '</a>';
 					}
 				}
 			}
@@ -124,12 +136,12 @@ class Theme_Options {
 				</div>
 					<?php
 					if ( ! empty( $options ) ) {
-						foreach ( $options as $key => $value ) {
-							if ( 'on' === $value ) {
-								echo '<div class="mdl-tabs__panel" id="panel-' , $key , '">';
-								echo '<form method="post" action="' , esc_html( $this->addons_actived[ $key ]->form_action ), '" id="' , $this->addons_actived[ $key ]->options_name, '">';
-								$this->addons_actived[ $key ]->fill_fields();
-								submit_button( __( 'Save Changes', 'sanpeity' ), 'primary large', 'submit', true, array( 'form' => $this->addons_actived[ $key ]->options_name ) );
+						foreach ( $options as $addon_id => $is_active ) {
+							if ( 'on' === $is_active ) {
+								echo '<div class="mdl-tabs__panel" id="panel-' , $addon_id , '">';
+								echo '<form method="post" action="' , esc_html( $this->addons_actived[ $addon_id ]['addon']->form_action ), '" id="' , $this->addons_actived[ $addon_id ]['addon']->options_name, '">';
+								$this->addons_actived[ $addon_id ]['addon']->fill_fields();
+								submit_button( __( 'Save Changes', 'sanpeity' ), 'primary large', 'submit', true, array( 'form' => $this->addons_actived[ $addon_id ]['addon']->options_name ) );
 								echo '</form>';
 								echo '</div>';
 							}

@@ -2,12 +2,8 @@
 
 namespace ThemeOptions;
 
-if ( is_admin() ) {
+include  'lib/constants.php';
 
-	include  'lib/constants.php';
+require_once LIB_PATH . '/class-theme-options.php';
 
-	require_once LIB_PATH . '/class-theme-options.php';
-
-	new Theme_Options();
-
-}
+new Theme_Options();
