@@ -4,6 +4,7 @@ namespace ThemeOptions;
 
 require_once LIB_PATH . '/class-config.php';
 require_once LIB_PATH . '/class-addon.php';
+require_once LIB_PATH . '/class-frontend.php';
 
 class Theme_Options {
 
@@ -109,47 +110,7 @@ class Theme_Options {
 
 	public function write_page() {
 		$options = $this->obj_options->get_option( $this->options_name );
-		?>
-		<div class="wrap">
-			<h2><?php echo esc_html__( 'Theme Options', 'sanpeity' ); ?></h2>
-			<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
-			  <div class="mdl-tabs__tab-bar">
-					<a href="#panel-setting" class="mdl-tabs__tab is-active"><?php echo esc_html( $this->config['display_name'] ); ?></a>
-			<?php
-			if ( ! empty( $options ) ) {
-				foreach ( $options as $addon_id => $is_active ) {
-					if ( 'on' === $is_active ) {
-						echo '<a href="#panel-' , $addon_id , '" class="mdl-tabs__tab">' , $this->addons_actived[ $addon_id ]->display_name , '</a>';
-					}
-				}
-			}
-			?>
-			  </div>
-				<div class="mdl-tabs__panel is-active" id="panel-setting">
-					<?php
-					echo '<form method="post" action="' , esc_html( $this->obj_options->FORM_ACTION ) , '" id="' , $this->options_name , '">';
-					$this->obj_options->fill();
-					submit_button( __( 'Save Changes', 'sanpeity' ), 'primary large', 'submit', true, array( 'form' => $this->options_name ) );
-					echo '</form>';
-					?>
-				</div>
-					<?php
-					if ( ! empty( $options ) ) {
-						foreach ( $options as $addon_id => $is_active ) {
-							if ( 'on' === $is_active ) {
-								echo '<div class="mdl-tabs__panel" id="panel-' , $addon_id , '">';
-								echo '<form method="post" action="' , esc_html( $this->addons_actived[ $addon_id ]->form_action ), '" id="' , $this->addons_actived[ $addon_id ]->options_name, '">';
-								$this->addons_actived[ $addon_id ]->fill_fields();
-								submit_button( __( 'Save Changes', 'sanpeity' ), 'primary large', 'submit', true, array( 'form' => $this->addons_actived[ $addon_id ]->options_name ) );
-								echo '</form>';
-								echo '</div>';
-							}
-						}
-					}
-					?>
-			</div>
-		</div>
-		<?php
+		\FrontEnd\Frontend::write_container( $options, $this->addons_actived, $this->obj_options, $this->options_name, $this->config['display_name'] );
 	}
 
 	public function enqueue_script( $hook_suffix ) {
