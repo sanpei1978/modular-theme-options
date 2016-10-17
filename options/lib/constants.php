@@ -1,4 +1,14 @@
 <?php
+/*
+Plugin Name: Theme Options
+Author: Takuma Yamanaka
+Plugin URI:
+Description: More portable, simpler. A options framework for WordPress themes.
+Version: 0.2.0
+Author URI: https://github.com/sanpei1978
+Domain Path: /languages
+Text Domain: theme-options
+*/
 
 namespace ThemeOptions;
 
@@ -33,9 +43,11 @@ if ( ! defined( 'ADMIN_DIR__' ) ) {
 const ADMIN_DIR = ADMIN_DIR__;
 
 const ADDON_PATH = ADMIN_PATH . '/addons';
+const ADDON_DIR = ADMIN_DIR . '/addons';
 const LIB_PATH = ADMIN_PATH . '/lib';
 const JS_DIR = ADMIN_DIR . '/assets/js';
 const JS_PATH = ADMIN_PATH . '/assets/js';
+const FRONTEND_PATH = ADMIN_PATH . '/frontends';
 
 if ( ! defined( 'THEME_NAME__' ) ) {
 	define( 'THEME_NAME__', $theme_name );

@@ -1,9 +1,20 @@
 <?php
+/*
+Plugin Name: Theme Options
+Author: Takuma Yamanaka
+Plugin URI:
+Description: More portable, simpler. A options framework for WordPress themes.
+Version: 0.2.0
+Author URI: https://github.com/sanpei1978
+Domain Path: /languages
+Text Domain: theme-options
+*/
 
 namespace ThemeOptions;
 
 require_once LIB_PATH . '/class-config.php';
-require_once LIB_PATH . '/class-addon.php';
+require_once ADDON_PATH . '/addon-loader.php';
+require_once FRONTEND_PATH . '/class-frontend.php';
 
 class Theme_Options {
 
@@ -27,6 +38,18 @@ class Theme_Options {
 		add_action( 'load-themes.php', array( $this, 'activate_admin_notice' ) );
 		add_action( 'admin_init', array( $this, 'initialize_theme_admin' ) );
 		add_action( 'admin_menu', array( $this, 'register_admin_menu' ) );
+
+		add_filter( 'script_loader_tag', array( $this, 'change_enqueued_script_type' ), 10, 2 );
+		add_filter( 'style_loader_tag', array( $this, 'change_enqueued_style_type' ), 10, 2 );
+
+		$options = $this->obj_options->get_option( $this->options_name );
+		if ( ! empty( $options ) ) {
+			foreach ( $options as $addon_id => $is_active ) {
+				if ( 'on' === $is_active ) {
+					$this->addons_actived[ $addon_id ] = new Addon_Loader( $addon_id, $this->config['loader_id'], Config::get( '', $addon_id ) ); // Load add-on.
+				}
+			}
+		}
 	}
 
 	public function activate_admin_notice() {
@@ -41,7 +64,7 @@ class Theme_Options {
 		<div class="updated notice is-dismissible">
 			<p>
 				<a href="<?php echo esc_url( admin_url( 'themes.php?page=' . $this->options_page ) ); ?>">
-					<?php echo esc_html__( 'Welcome. Here is theme options.', 'sanpeity' ); ?>
+					<?php echo esc_html__( 'Welcome. Here is theme options.', 'theme-options' ); ?>
 				</a>
 			</p>
 		</div>
@@ -52,23 +75,21 @@ class Theme_Options {
 
 		$input_fields = array();
 
-		$i = 0;
 		foreach ( $this->config['addons'] as $addon_id ) {
-			$config = Config::get( $addon_id );
-			$label = __( '(You cannot use.)', 'sanpeity' );
+			$config = Config::get( '', $addon_id );
+			$label = __( '(You cannot use.)', 'theme-options' );
 			$type = 'disabled';
-			if ( ! empty( $config ) ) {
+			if ( ! empty( $config ) && isset( $config['display_name'] ) ) {
 				$label = 'Use ' . $config['display_name'];
 				$type = 'checkbox';
 			}
 			$input_fields[] = array(
 				'id'		=> $addon_id,
-				'title'	=> (0 === $i) ? 'Usable add-ons' : '',
+				'title'	=> '',
 				'label'	=> $label,
 				'type'	=> $type,
 				'section' => 'setting_section_1',
 			);
-			$i++;
 		}
 
 		$this->obj_options->initialize(
@@ -81,9 +102,9 @@ class Theme_Options {
 
 		$options = $this->obj_options->get_option( $this->options_name );
 		if ( ! empty( $options ) ) {
-			foreach ( $options as $key => $value ) {
-				if ( 'on' === $value ) {
-					$this->addons_actived[ $key ] = new Addon( $key, $this->config['loader_id'] ); // Load add-on.
+			foreach ( $options as $addon_id => $is_active ) {
+				if ( 'on' === $is_active ) {
+					$this->addons_actived[ $addon_id ]->initialize();
 				}
 			}
 		}
@@ -91,67 +112,54 @@ class Theme_Options {
 	}
 
 	function register_admin_menu() {
-	 	$page_slug = add_theme_page( THEME_NAME, esc_html__( 'Theme Options', 'sanpeity' ), 'edit_theme_options', $this->options_page, array( $this, 'write_page' ) );
+	 	$page_slug = add_theme_page( THEME_NAME, esc_html__( 'Theme Options', 'theme-options' ), 'edit_theme_options', $this->options_page, array( $this, 'write_page' ) );
 		add_action( 'admin_print_scripts-' . $page_slug, array( $this, 'enqueue_script' ) );
 		add_action( 'admin_print_styles-' . $page_slug, array( $this, 'enqueue_style' ) );
 	}
 
 	public function write_page() {
 		$options = $this->obj_options->get_option( $this->options_name );
-		?>
-		<div class="wrap">
-			<h2><?php echo esc_html__( 'Theme Options', 'sanpeity' ); ?></h2>
-			<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
-			  <div class="mdl-tabs__tab-bar">
-					<a href="#panel-setting" class="mdl-tabs__tab is-active"><?php echo esc_html( $this->config['display_name'] ); ?></a>
-			<?php
-			if ( ! empty( $options ) ) {
-				foreach ( $options as $key => $value ) {
-					if ( 'on' === $value ) {
-						echo '<a href="#panel-' , $key , '" class="mdl-tabs__tab">' , $this->addons_actived[ $key ]->display_name , '</a>';
-					}
-				}
-			}
-			?>
-			  </div>
-				<div class="mdl-tabs__panel is-active" id="panel-setting">
-					<?php
-					echo '<form method="post" action="' , esc_html( $this->obj_options->FORM_ACTION ) , '" id="' , $this->options_name , '">';
-					$this->obj_options->fill();
-					submit_button( __( 'Save Changes', 'sanpeity' ), 'primary large', 'submit', true, array( 'form' => $this->options_name ) );
-					echo '</form>';
-					?>
-				</div>
-					<?php
-					if ( ! empty( $options ) ) {
-						foreach ( $options as $key => $value ) {
-							if ( 'on' === $value ) {
-								echo '<div class="mdl-tabs__panel" id="panel-' , $key , '">';
-								echo '<form method="post" action="' , esc_html( $this->addons_actived[ $key ]->form_action ), '" id="' , $this->addons_actived[ $key ]->options_name, '">';
-								$this->addons_actived[ $key ]->fill_fields();
-								submit_button( __( 'Save Changes', 'sanpeity' ), 'primary large', 'submit', true, array( 'form' => $this->addons_actived[ $key ]->options_name ) );
-								echo '</form>';
-								echo '</div>';
-							}
-						}
-					}
-					?>
-			</div>
-		</div>
-		<?php
+		\FrontEnd\Front_End::write_container( $options, $this->addons_actived, $this->obj_options, $this->options_name, $this->config['display_name'] );
 	}
 
 	public function enqueue_script( $hook_suffix ) {
 		//if ( 'appearance_page_' . $this->options_page === $hook_suffix ) {
 		wp_enqueue_media();
 		wp_enqueue_script( 'media-uploader', JS_DIR . '/media-uploader.js', array( 'jquery' ), filemtime( JS_PATH . '/media-uploader.js' ), false );
-		wp_enqueue_script( 'material', 'https://code.getmdl.io/1.2.1/material.min.js', array(), '1.2.1', false );
+		if ( 'material' === $this->config['frontend'] ) {
+			wp_enqueue_script( 'material', 'https://code.getmdl.io/1.2.1/material.min.js', array(), '1.2.1', false );
+		}
+		if ( 'bootstrap' === $this->config['frontend'] ) {
+			wp_enqueue_script( 'tether', 'https://raw.githubusercontent.com/HubSpot/tether/master/dist/js/tether.min.js', array(), '', false );
+			wp_enqueue_script( 'bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/js/bootstrap.min.js' , array( 'tether' ), '4.0.0', false );
+		}
 		//}
 	}
 
 	public function enqueue_style( $hook_suffix ) {
 		wp_enqueue_style( 'material-icon', 'https://fonts.googleapis.com/icon?family=Material+Icons', array(), '', 'all' );
-		wp_enqueue_style( 'material', 'https://code.getmdl.io/1.2.1/material.blue-light_blue.min.css', array( 'material-icon' ), '', 'all' );
+		if ( 'material' === $this->config['frontend'] ) {
+			wp_enqueue_style( 'material', 'https://code.getmdl.io/1.2.1/material.blue-light_blue.min.css', array( 'material-icon' ), '', 'all' );
+		}
+		if ( 'bootstrap' === $this->config['frontend'] ) {
+			wp_enqueue_style( 'bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css', array(), '', 'all' );
+		}
+	}
+
+	public function change_enqueued_script_type( $tag, $handle ) {
+		if ( 'bootstrap' === $handle ) {
+			return str_replace( "type='text/javascript'", 'integrity="sha384-VjEeINv9OSwtWFLAtmc4JCtEJXXBub00gtSnszmspDLCtC0I4z4nqz7rEFbIZLLU" crossorigin="anonymous"', $tag );
+		} else {
+			return $tag;
+		}
+	}
+
+	public function change_enqueued_style_type( $tag, $handle ) {
+		if ( 'bootstrap' === $handle ) {
+			return  preg_replace( array( "| type='.+?'s*|","| id='.+?'s*|", '| />|' ), array( 'integrity="sha384-2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous"', ' ', '>' ), $tag );
+		} else {
+			return $tag;
+		}
 	}
 
 }
