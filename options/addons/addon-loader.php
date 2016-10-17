@@ -2,7 +2,7 @@
 
 namespace ThemeOptions;
 
-require_once LIB_PATH . '/class-addon.php';
+require_once LIB_PATH . '/class-addon-base.php';
 
 class Addon extends Addon_Base {
 	public function __construct( $addon_id, $loader_id, $config ) {
