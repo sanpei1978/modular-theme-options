@@ -2,9 +2,9 @@
 
 namespace ThemeOptions;
 
-require_once LIB_PATH . '/class-addon-base.php';
+require_once LIB_PATH . '/class-addon-loader-base.php';
 
-class Addon extends Addon_Base {
+class Addon_Loader extends Addon_Loader_Base {
 	public function __construct( $addon_id, $loader_id, $config ) {
 		parent::__construct( $addon_id, $loader_id, $config );
 		if ( 'login-page' === $addon_id ) {

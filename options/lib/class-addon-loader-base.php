@@ -2,9 +2,9 @@
 
 namespace ThemeOptions;
 
-require_once LIB_PATH . '/interface-addon.php';
+require_once LIB_PATH . '/interface-addon-loader.php';
 
-class Addon_Base implements Interface_Addon {
+class Addon_Loader_Base implements Interface_Addon_Loader {
 
 	private $options_page;
 	private $options_group;

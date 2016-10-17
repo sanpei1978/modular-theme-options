@@ -36,7 +36,7 @@ class Theme_Options {
 		if ( ! empty( $options ) ) {
 			foreach ( $options as $addon_id => $is_active ) {
 				if ( 'on' === $is_active ) {
-					$this->addons_actived[ $addon_id ] = new Addon( $addon_id, $this->config['loader_id'], Config::get( '', $addon_id ) ); // Load add-on.
+					$this->addons_actived[ $addon_id ] = new Addon_Loader( $addon_id, $this->config['loader_id'], Config::get( '', $addon_id ) ); // Load add-on.
 				}
 			}
 		}
@@ -65,7 +65,6 @@ class Theme_Options {
 
 		$input_fields = array();
 
-		$i = 0;
 		foreach ( $this->config['addons'] as $addon_id ) {
 			$config = Config::get( '', $addon_id );
 			$label = __( '(You cannot use.)', 'sanpeity' );
@@ -76,12 +75,11 @@ class Theme_Options {
 			}
 			$input_fields[] = array(
 				'id'		=> $addon_id,
-				'title'	=> (0 === $i) ? 'Usable add-ons' : '',
+				'title'	=> '',
 				'label'	=> $label,
 				'type'	=> $type,
 				'section' => 'setting_section_1',
 			);
-			$i++;
 		}
 
 		$this->obj_options->initialize(
