@@ -13,7 +13,7 @@ More portable, simpler. A options framework for WordPress themes.
  + Improvement of the logic for front-end.
  + Support more input fields.
  + New Add-ons for this framework.
- ++ There is a Add-ons "login-page", "maintenance-mode"  now.
+  ++ There is a Add-ons "login-page", "maintenance-mode"  now.
  + New wrapper class for the other data store.
 
 ## Get Started
