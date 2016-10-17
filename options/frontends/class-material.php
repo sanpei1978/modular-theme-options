@@ -1,4 +1,14 @@
 <?php
+/*
+Plugin Name: Theme Options
+Author: Takuma Yamanaka
+Plugin URI:
+Description: More portable, simpler. A options framework for WordPress themes.
+Version: 0.2.0
+Author URI: https://github.com/sanpei1978
+Domain Path: /languages
+Text Domain: theme-options
+*/
 
 namespace FrontEnd;
 
@@ -7,7 +17,7 @@ class Material_Ui_Lite {
 	public static function write_container( $options, $addons, $obj_options, $options_name, $display_name ) {
 		?>
 		<div class="wrap">
-			<h2><?php echo esc_html__( 'Theme Options', 'sanpeity' ); ?></h2>
+			<h2><?php echo esc_html__( 'Theme Options', 'theme-options' ); ?></h2>
 			<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
 			  <div class="mdl-tabs__tab-bar">
 					<a href="#panel-setting" class="mdl-tabs__tab is-active"><?php echo esc_html( $display_name ); ?></a>

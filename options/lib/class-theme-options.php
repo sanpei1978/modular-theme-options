@@ -1,4 +1,14 @@
 <?php
+/*
+Plugin Name: Theme Options
+Author: Takuma Yamanaka
+Plugin URI:
+Description: More portable, simpler. A options framework for WordPress themes.
+Version: 0.2.0
+Author URI: https://github.com/sanpei1978
+Domain Path: /languages
+Text Domain: theme-options
+*/
 
 namespace ThemeOptions;
 
@@ -54,7 +64,7 @@ class Theme_Options {
 		<div class="updated notice is-dismissible">
 			<p>
 				<a href="<?php echo esc_url( admin_url( 'themes.php?page=' . $this->options_page ) ); ?>">
-					<?php echo esc_html__( 'Welcome. Here is theme options.', 'sanpeity' ); ?>
+					<?php echo esc_html__( 'Welcome. Here is theme options.', 'theme-options' ); ?>
 				</a>
 			</p>
 		</div>
@@ -67,7 +77,7 @@ class Theme_Options {
 
 		foreach ( $this->config['addons'] as $addon_id ) {
 			$config = Config::get( '', $addon_id );
-			$label = __( '(You cannot use.)', 'sanpeity' );
+			$label = __( '(You cannot use.)', 'theme-options' );
 			$type = 'disabled';
 			if ( ! empty( $config ) && isset( $config['display_name'] ) ) {
 				$label = 'Use ' . $config['display_name'];
@@ -102,7 +112,7 @@ class Theme_Options {
 	}
 
 	function register_admin_menu() {
-	 	$page_slug = add_theme_page( THEME_NAME, esc_html__( 'Theme Options', 'sanpeity' ), 'edit_theme_options', $this->options_page, array( $this, 'write_page' ) );
+	 	$page_slug = add_theme_page( THEME_NAME, esc_html__( 'Theme Options', 'theme-options' ), 'edit_theme_options', $this->options_page, array( $this, 'write_page' ) );
 		add_action( 'admin_print_scripts-' . $page_slug, array( $this, 'enqueue_script' ) );
 		add_action( 'admin_print_styles-' . $page_slug, array( $this, 'enqueue_style' ) );
 	}
