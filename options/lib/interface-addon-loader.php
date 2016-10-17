@@ -12,8 +12,8 @@ Text Domain: theme-options
 
 namespace ThemeOptions;
 
-include  'lib/constants.php';
-
-require_once LIB_PATH . '/class-theme-options.php';
-
-new Theme_Options();
+interface Interface_Addon_Loader {
+	public function initialize();
+	public function fill_fields();
+	public function __get( $property_name );
+}
