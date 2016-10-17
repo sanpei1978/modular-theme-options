@@ -49,7 +49,7 @@ return [
 			'id' => 'form-opacity',
 			'title' => __( 'Form opacity', 'sanpeity' ),
 			'type' => 'text',
-			'label' => __( 'e.g. 0.93', 'sanpeity' ),
+			'label' => __( 'default: 1.0, e.g. 0.93.', 'sanpeity' ),
 			'section' => 'setting_section_login_page_2',
 		],
 	],

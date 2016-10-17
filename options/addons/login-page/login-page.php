@@ -36,7 +36,7 @@ class Login_Page {
 		$logo_h = esc_html( $options['media-upload-logo_img_h'] );
 		$opacity = esc_html( $options['form-opacity'] );
 		if ( empty( $opacity ) ) {
-			$opacity = '0.93';
+			$opacity = '1.0';
 		}
 		echo '<div class="login-page-cover"></div>
 		<style>
