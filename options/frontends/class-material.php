@@ -25,7 +25,7 @@ class Material_Ui_Lite {
 					<?php
 					echo '<form method="post" action="' , esc_html( $obj_options->FORM_ACTION ) , '" id="' , $options_name , '">';
 					$obj_options->fill();
-					submit_button( __( 'Save Changes', 'sanpeity' ), 'primary large', 'submit', true, array( 'form' => $options_name ) );
+					submit_button( __( 'Save Changes' ), 'primary large', 'submit', true, array( 'form' => $options_name ) );
 					echo '</form>';
 					?>
 				</div>
@@ -36,7 +36,7 @@ class Material_Ui_Lite {
 								echo '<div class="mdl-tabs__panel" id="panel-' , $addon_id , '">';
 								echo '<form method="post" action="' , esc_html( $addons[ $addon_id ]->form_action ), '" id="' , $addons[ $addon_id ]->options_name, '">';
 								$addons[ $addon_id ]->fill_fields();
-								submit_button( __( 'Save Changes', 'sanpeity' ), 'primary large', 'submit', true, array( 'form' => $addons[ $addon_id ]->options_name ) );
+								submit_button( __( 'Save Changes' ), 'primary large', 'submit', true, array( 'form' => $addons[ $addon_id ]->options_name ) );
 								echo '</form>';
 								echo '</div>';
 							}
@@ -92,10 +92,10 @@ class Material_Ui_Lite {
 							<input class="mdl-textfield__input" type="text" id="' , $field_id . '" name="' , $field_name, '" value="' , $value , '">
 								<label class="mdl-textfield__label" for="' , $field_id , '">', $input_label , '</label>
 								</div>';
-				echo ' <button id="choose-image-' . $field_id . '" class="media-button mdl-button mdl-js-button mdl-button--raised mdl-button--colored">', esc_html__( 'Choose image', 'sanpeity' ) , '</button>';
+				echo ' <button id="choose-image-' . $field_id . '" class="media-button mdl-button mdl-js-button mdl-button--raised mdl-button--colored">', esc_html__( 'Select Image' ) , '</button>';
 				echo '<div id="image-preview">';
 				if ( $value ) {
-					echo '<img src="' . $value . '" style="width:360px;"/>';
+					echo '<img src="' . $value . '" style="width:300px;"/>';
 				}
 				echo '</div>';
 				break;
