@@ -14,13 +14,8 @@ return [
 	'setting_sections' => [
 		[
 			'id'			=> 'setting_section_login_page_1',
-			'title'		=> __( 'SECTION TITLE 1', 'sanpeity' ),
-			'summary'	=> __( 'SECTION SUMMARY 1', 'sanpeity' ),
-		],
-		[
-			'id'			=> 'setting_section_login_page_2',
-			'title'		=> __( 'SECTION TITLE 2', 'sanpeity' ),
-			'summary'	=> __( 'SECTION SUMMARY 2', 'sanpeity' ),
+			'title'		=> '',
+			'summary'	=> '',
 		],
 	],
 	'input_fields' => [
@@ -50,7 +45,7 @@ return [
 			'title' => __( 'Form opacity', 'sanpeity' ),
 			'type' => 'text',
 			'label' => __( 'default: 1.0, e.g. 0.93.', 'sanpeity' ),
-			'section' => 'setting_section_login_page_2',
+			'section' => 'setting_section_login_page_1',
 		],
 	],
 ];
