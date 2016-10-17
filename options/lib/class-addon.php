@@ -33,7 +33,7 @@ class Addon implements Interface_Addon {
 
 		require_once( ADDON_PATH . '/' . $addon_id . '/' . $addon_id . '.php' );
 		if ( 'login-page' === $addon_id ) {
-			LoginPage\Login_Page::get_instance( $obj_options );
+			LoginPage\Login_Page::get_instance( $this->options_name, $this->obj_options );
 		}
 
 	}

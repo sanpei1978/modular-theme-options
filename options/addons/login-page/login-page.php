@@ -5,17 +5,19 @@ namespace ThemeOptions\LoginPage;
 class Login_Page {
 
 	private static $instance = null;
-	private $addon;
+	private $options_name;
+	private $obj_options;
 
-	public static function get_instance( &$addon ) {
+	public static function get_instance( $options_name, &$obj_options ) {
 		if ( null === self::$instance ) {
-				self::$instance = new self( $addon );
+				self::$instance = new self( $options_name, $obj_options );
 		}
 		return self::$instance;
 	}
 
-	private function __construct( &$addon ) {
-		$this->addon = $addon;
+	private function __construct( $options_name, &$obj_options ) {
+		$this->options_name = $options_name;
+		$this->obj_options = $obj_options;
 		add_action( 'login_enqueue_scripts', array( $this, 'login_css' ) );
 		add_filter( 'login_headerurl', array( $this, 'custom_login_logo_url' ) );
 		add_filter( 'login_headertitle', array( $this, 'custom_login_logo_title' ) );
@@ -30,7 +32,7 @@ class Login_Page {
 	}
 
 	public function login_css() {
-		$options = $this->addon->obj_options->get_option( $this->addon->options_name );
+		$options = $this->obj_options->get_option( $this->options_name );
 		$bg_img = esc_html( $options['media-upload-bg_img'] );
 		$logo_img = esc_html( $options['media-upload-logo_img'] );
 		$logo_h = esc_html( $options['media-upload-logo_img_h'] );
