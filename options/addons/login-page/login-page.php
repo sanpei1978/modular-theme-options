@@ -1,21 +1,23 @@
 <?php
 
-namespace ThemeOptions\LoginPage;
+namespace ThemeOptions\Addon;
 
 class Login_Page {
 
-	private static $instance = null;
+	//private static $instance = null;
 	private $options_name;
 	private $obj_options;
 
+	/*
 	public static function get_instance( $options_name, &$obj_options ) {
 		if ( null === self::$instance ) {
 				self::$instance = new self( $options_name, $obj_options );
 		}
 		return self::$instance;
 	}
+	*/
 
-	private function __construct( $options_name, &$obj_options ) {
+	public function __construct( $options_name, &$obj_options ) {
 		$this->options_name = $options_name;
 		$this->obj_options = $obj_options;
 		add_action( 'login_enqueue_scripts', array( $this, 'login_css' ) );
