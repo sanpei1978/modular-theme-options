@@ -72,7 +72,7 @@ class Theme_Options {
 			$config = Config::get( '', $addon_id );
 			$label = __( '(You cannot use.)', 'sanpeity' );
 			$type = 'disabled';
-			if ( ! empty( $config ) ) {
+			if ( ! empty( $config ) && isset( $config['display_name'] ) ) {
 				$label = 'Use ' . $config['display_name'];
 				$type = 'checkbox';
 			}
