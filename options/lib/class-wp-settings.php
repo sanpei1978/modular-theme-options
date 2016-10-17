@@ -91,7 +91,7 @@ class Wp_Settings extends Wp_Settings_Abstract implements Interface_Options {
 		$input_label = $args[2];
 		$options = $this->get_option( $this->options_name );
 
-		\FrontEnd\Frontend::write_input_field( $field_id, $input_type, $field_name, $input_label, $options );
+		\FrontEnd\Front_End::write_input_field( $field_id, $input_type, $field_name, $input_label, $options );
 	}
 
 }

@@ -2,7 +2,7 @@
 
 namespace FrontEnd;
 
-class Frontend {
+class Material_Ui_Lite {
 
 	public static function write_container( $options, $addons, $obj_options, $options_name, $display_name ) {
 		?>

@@ -12,6 +12,7 @@ return [
 	'loader_id' => 'theme_options',
 	'obj_options' => new Wp_Settings(), // The way of data store.
 	'addons' => [ 'login-page', 'maintenance-page' ], // Using add-ons.
+	'frontend' => 'material', // or bootstrap(but not implement yet.)
 	'setting_sections' => [
 		[
 			'id'			=> 'setting_section_1',
