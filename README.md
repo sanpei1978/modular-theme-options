@@ -13,15 +13,14 @@ More portable, simpler. A options framework for WordPress themes.
 + Improvement of the logic for front-end.
 + Support more input fields.
 + New Add-ons for this framework.
-++ There is a Add-ons "login-page", "maintenance-mode" now.
+ ++ There is a Add-ons "login-page", "maintenance-mode" now.
 + New wrapper class for the other data store.
 
 ## Get Started
-
-- You must place "options" directory to your theme directory.
-- And then, include "options/theme-options-loader.php" in the Wordpress "functions.php".
-- Edit configurations. There are "options/config.php" and "options/addons/{ADD-ON ID}/config.php".
-- If you add new add-ons, edit "options/addons/addon-loader.php" to load new add-ons.
++ You must place "options" directory to your theme directory.
++ And then, include "options/theme-options-loader.php" in the Wordpress "functions.php".
++ Edit configurations. There are "options/config.php" and "options/addons/{ADD-ON ID}/config.php".
++ If you add new add-ons, edit "options/addons/addon-loader.php" to load new add-ons.
 
 ## Postscript
 
