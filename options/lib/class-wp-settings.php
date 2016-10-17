@@ -53,6 +53,10 @@ class Wp_Settings extends Wp_Settings_Abstract implements Interface_Options {
 		register_setting( $options_group, $options_name, array( $this, 'sanitize_callback' ) );
 	}
 
+	public function terminate() {
+		unregister_setting( $this->options_group, $this->options_group );
+	}
+
 	public function fill() {
 		settings_fields( $this->options_group );
 		do_settings_sections( $this->options_page );
@@ -67,11 +71,12 @@ class Wp_Settings extends Wp_Settings_Abstract implements Interface_Options {
 	public function sanitize_callback( $input ) {
 		$new_input = array();
 		for ( $i = 0; $i < count( $this->all_field_ids ); $i++ ) {
-			$all_field_id = esc_html( $this->all_field_ids[ $i ] );
+			$all_field_id = esc_attr( $this->all_field_ids[ $i ] );
 			if ( isset( $input[ $all_field_id ] ) ) {
 				$new_input[ $all_field_id ] = $input[ $all_field_id ];
 			}
 		}
+		//add_settings_error('test');
 		return $new_input;
 	}
 
@@ -90,6 +95,8 @@ class Wp_Settings extends Wp_Settings_Abstract implements Interface_Options {
 		$field_name = $this->options_name . '[' . $field_id . ']';
 		$input_label = $args[2];
 		$options = $this->get_option( $this->options_name );
+		//get_settings_errors('test');
+		//settings_errors('test');
 
 		\FrontEnd\Front_End::write_input_field( $field_id, $input_type, $field_name, $input_label, $options );
 	}

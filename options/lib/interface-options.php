@@ -14,6 +14,7 @@ interface Interface_Options {
 		$options_name = '',
 		$input_fields
 	);
+	public function terminate();
 	public function fill();
 	public function __get( $property_name );
 
