@@ -93,7 +93,11 @@ class Material_Ui_Lite {
 								<label class="mdl-textfield__label" for="' , $field_id , '">', $input_label , '</label>
 								</div>';
 				echo ' <button id="choose-image-' . $field_id . '" class="media-button mdl-button mdl-js-button mdl-button--raised mdl-button--colored">', esc_html__( 'Choose image', 'sanpeity' ) , '</button>';
-				echo '<div id="image-preview"></div>';
+				echo '<div id="image-preview">';
+				if ( $value ) {
+					echo '<img src="' . $value . '" style="width:360px;"/>';
+				}
+				echo '</div>';
 				break;
 			case 'hidden':
 				$value = '';

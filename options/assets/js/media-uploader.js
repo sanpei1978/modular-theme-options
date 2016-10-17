@@ -14,7 +14,7 @@ jQuery(document).ready(function($) {
 		custom_uploader.on('select', function() {
 			var images = custom_uploader.state().get('selection');
 			images.each(function(file){
-				$(e.currentTarget).next().append('<img src="'+file.toJSON().url+'" style="width:360px;"/>');
+				$(e.currentTarget).next().html('<img src="'+file.toJSON().url+'" style="width:360px;"/>');
 				$(e.currentTarget).prev().children('input').val(file.toJSON().url);
 				$("#" + e.currentTarget.id + "_h").val(file.toJSON().height);
 			});
