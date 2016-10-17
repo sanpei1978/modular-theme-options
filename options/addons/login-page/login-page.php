@@ -34,6 +34,10 @@ class Login_Page {
 		$bg_img = esc_html( $options['media-upload-bg_img'] );
 		$logo_img = esc_html( $options['media-upload-logo_img'] );
 		$logo_h = esc_html( $options['media-upload-logo_img_h'] );
+		$opacity = esc_html( $options['form-opacity'] );
+		if ( empty( $opacity ) ) {
+			$opacity = '0.93';
+		}
 		echo '<div class="login-page-cover"></div>
 		<style>
 				.login-page-cover {
@@ -50,7 +54,7 @@ class Login_Page {
 				#login {
 						z-index:9999;
 						position:relative;
-						opacity: 0.93;
+						opacity: ' . $opacity . ';
 				}';
 		if ( ! empty( $logo_img ) ) {
 			echo '#login h1 a {

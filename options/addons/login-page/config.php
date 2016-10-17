@@ -46,10 +46,10 @@ return [
 			'section' => 'setting_section_login_page_1',
 		],
 		[
-			'id' => 'other',
-			'title' => __( 'Other', 'sanpeity' ),
+			'id' => 'form-opacity',
+			'title' => __( 'Form opacity', 'sanpeity' ),
 			'type' => 'text',
-			'label' => __( 'Text', 'sanpeity' ),
+			'label' => __( 'e.g. 0.93', 'sanpeity' ),
 			'section' => 'setting_section_login_page_2',
 		],
 	],
