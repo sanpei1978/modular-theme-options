@@ -4,6 +4,7 @@ namespace ThemeOptions;
 
 require_once LIB_PATH . '/class-config.php';
 require_once LIB_PATH . '/class-addon.php';
+require_once ADDON_PATH . '/addon-loader.php';
 require_once FRONTEND_PATH . '/class-frontend.php';
 
 class Theme_Options {

@@ -4,7 +4,7 @@ namespace ThemeOptions;
 
 require_once LIB_PATH . '/interface-addon.php';
 
-class Addon implements Interface_Addon {
+class Addon_Base implements Interface_Addon {
 
 	private $options_page;
 	private $options_group;
@@ -16,7 +16,6 @@ class Addon implements Interface_Addon {
 
 	private $display_name;
 	private $form_action;
-
 
 	public function __construct( $addon_id, $loader_id, $config ) {
 
@@ -32,9 +31,6 @@ class Addon implements Interface_Addon {
 		$this->form_action = $this->obj_options->FORM_ACTION;
 
 		require_once( ADDON_PATH . '/' . $addon_id . '/' . $addon_id . '.php' );
-		if ( 'login-page' === $addon_id ) {
-			LoginPage\Login_Page::get_instance( $this->options_name, $this->obj_options );
-		}
 
 	}
 
