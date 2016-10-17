@@ -31,6 +31,11 @@ class Addon implements Interface_Addon {
 		$this->display_name = $config['display_name'];
 		$this->form_action = $this->obj_options->FORM_ACTION;
 
+		require_once( ADDON_PATH . '/' . $addon_id . '/' . $addon_id . '.php' );
+		if ( 'login-page' === $addon_id ) {
+			LoginPage\Login_Page::get_instance( $obj_options );
+		}
+
 	}
 
 	public function initialize() {

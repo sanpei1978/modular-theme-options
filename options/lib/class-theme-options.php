@@ -37,8 +37,6 @@ class Theme_Options {
 			foreach ( $options as $addon_id => $is_active ) {
 				if ( 'on' === $is_active ) {
 					$this->addons_actived[ $addon_id ] = new Addon( $addon_id, $this->config['loader_id'], Config::get( '', $addon_id ) ); // Load add-on.
-					require_once( ADDON_PATH . '/' . $addon_id . '/' . $addon_id . '.php' );
-					LoginPage\Login_Page::get_instance( $this->addons_actived[ $addon_id ] );
 				}
 			}
 		}
