@@ -7,9 +7,9 @@ class Config {
 	private static $config_file_name = 'config.php';
 	private static $configs = [];
 
-	public static function get( $key = '', $addon_id = 'theme-options' ) {
+	public static function get( $key = '', $addon_id = 'theme_options' ) {
 		$addon_config = ADDON_PATH . '/' . $addon_id . '/' . self::$config_file_name;
-		if ( 'theme-options' === $addon_id ) {
+		if ( 'theme_options' === $addon_id ) {
 			$addon_config = ADMIN_PATH . '/' . self::$config_file_name;
 		}
 		if ( ! file_exists( $addon_config ) ) {
