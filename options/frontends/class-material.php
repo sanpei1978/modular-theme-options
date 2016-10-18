@@ -67,7 +67,7 @@ class Material_Ui_Lite {
 					$checked = checked( $options[ $field_id ], 'on' , false );
 				}
 				echo '<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="' , $field_id , '">';
-				echo '<input type="checkbox" id="' , $field_id , '" name="' , $field_name , ']" class="mdl-checkbox__input" ' , $checked , ' ', $disabled , '>';
+				echo '<input type="checkbox" id="' , $field_id , '" name="' , $field_name , '" class="mdl-checkbox__input" ' , $checked , ' ', $disabled , '>';
 				echo '<span class="mdl-checkbox__label">' , $input_label , '</span>';
 				echo '</label>';
 				break;
@@ -79,7 +79,7 @@ class Material_Ui_Lite {
 					$disabled = disabled( 1, 1, false );
 				}
 				echo '<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="' , $field_id , '">';
-				echo '<input type="checkbox" id="' , $field_id , '" name="' , $field_name , ']" class="mdl-checkbox__input" ' , $checked , ' ', disabled( 1, 1, false ) , '>';
+				echo '<input type="checkbox" id="' , $field_id , '" name="' , $field_name , '" class="mdl-checkbox__input" ' , $checked , ' ', disabled( 1, 1, false ) , '>';
 				echo '<span class="mdl-checkbox__label">' , $input_label , '</span>';
 				echo '</label>';
 				break;
