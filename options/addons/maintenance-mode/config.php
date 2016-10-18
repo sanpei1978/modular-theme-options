@@ -4,7 +4,7 @@ Plugin Name: Theme Options
 Author: Takuma Yamanaka
 Plugin URI:
 Description: More portable, simpler. A options framework for WordPress themes.
-Version: 0.2.0
+Version: 0.3.0
 Author URI: https://github.com/sanpei1978
 Domain Path: /languages
 Text Domain: theme-options
@@ -25,14 +25,61 @@ return [
 			'title'		=> '',
 			'summary'	=> '',
 		],
+		[
+			'id'			=> 'setting_section_maintenance_mode_2',
+			'title'		=> esc_html__( 'Display content', 'theme-options' ),
+			'summary'	=> '',
+		],
 	],
 	'input_fields' => [
 		[
 			'id' => 'is_maintenance_mode',
 			'title' => '',
 			'type' => 'checkbox',
-			'label' => __( 'Be maintenance mode', 'theme-options' ),
+			'label' => esc_html__( 'Be maintenance mode', 'theme-options' ),
 			'section' => 'setting_section_maintenance_mode_1',
+		],
+		[
+			'id' => 'is-non-logged-in',
+			'title' => '',
+			'type' => 'checkbox',
+			'label' => esc_html__( 'Only non-logged in user', 'theme-options' ),
+			'section' => 'setting_section_maintenance_mode_1',
+		],
+		[
+			'id' => 'maintenance-period',
+			'title' => esc_html__( 'Period', 'theme-options' ),
+			'type' => 'text',
+			'label' => esc_html__( 'Period of maintenance. Free text.', 'theme-options' ),
+			'section' => 'setting_section_maintenance_mode_2',
+		],
+		[
+			'id' => 'contact-name',
+			'title' => esc_html__( 'Name', 'theme-options' ),
+			'type' => 'text',
+			'label' => esc_html__( 'Your name', 'theme-options' ),
+			'section' => 'setting_section_maintenance_mode_2',
+		],
+		[
+			'id' => 'contact-address',
+			'title' => esc_html__( 'Address', 'theme-options' ),
+			'type' => 'text',
+			'label' => esc_html__( 'Your address', 'theme-options' ),
+			'section' => 'setting_section_maintenance_mode_2',
+		],
+		[
+			'id' => 'contact-tel',
+			'title' => esc_html__( 'TEL', 'theme-options' ),
+			'type' => 'text',
+			'label' => esc_html__( 'Your tel number', 'theme-options' ),
+			'section' => 'setting_section_maintenance_mode_2',
+		],
+		[
+			'id' => 'contact-fax',
+			'title' => esc_html__( 'FAX', 'theme-options' ),
+			'type' => 'text',
+			'label' => esc_html__( 'Your fax number', 'theme-options' ),
+			'section' => 'setting_section_maintenance_mode_2',
 		],
 	],
 ];

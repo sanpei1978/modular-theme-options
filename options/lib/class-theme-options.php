@@ -4,7 +4,7 @@ Plugin Name: Theme Options
 Author: Takuma Yamanaka
 Plugin URI:
 Description: More portable, simpler. A options framework for WordPress themes.
-Version: 0.2.0
+Version: 0.3.0
 Author URI: https://github.com/sanpei1978
 Domain Path: /languages
 Text Domain: theme-options
@@ -46,7 +46,10 @@ class Theme_Options {
 		if ( ! empty( $options ) ) {
 			foreach ( $options as $addon_id => $is_active ) {
 				if ( 'on' === $is_active ) {
-					$this->addons_actived[ $addon_id ] = new Addon_Loader( $addon_id, $this->config['loader_id'], Config::get( '', $addon_id ) ); // Load add-on.
+					$config = Config::get( '', $addon_id );
+					if ( isset( $config['obj_options'] ) ) {
+						$this->addons_actived[ $addon_id ] = new Addon_Loader( $addon_id, $this->config['loader_id'], $config ); // Load add-on.
+					}
 				}
 			}
 		}
@@ -77,10 +80,10 @@ class Theme_Options {
 
 		foreach ( $this->config['addons'] as $addon_id ) {
 			$config = Config::get( '', $addon_id );
-			$label = __( '(You cannot use.)', 'theme-options' );
+			$label = sprintf( __( '"%s" is not available.', 'theme-options' ), $addon_id );
 			$type = 'disabled';
 			if ( ! empty( $config ) && isset( $config['display_name'] ) ) {
-				$label = 'Use ' . $config['display_name'];
+				$label = sprintf( __( 'Use %s.', 'theme-options' ), $config['display_name'] );
 				$type = 'checkbox';
 			}
 			$input_fields[] = array(
@@ -103,7 +106,7 @@ class Theme_Options {
 		$options = $this->obj_options->get_option( $this->options_name );
 		if ( ! empty( $options ) ) {
 			foreach ( $options as $addon_id => $is_active ) {
-				if ( 'on' === $is_active ) {
+				if ( 'on' === $is_active && ! empty( Config::get( 'obj_options', $addon_id ) ) ) {
 					$this->addons_actived[ $addon_id ]->initialize();
 				}
 			}
@@ -112,7 +115,7 @@ class Theme_Options {
 	}
 
 	function register_admin_menu() {
-	 	$page_slug = add_theme_page( THEME_NAME, esc_html__( 'Theme Options', 'theme-options' ), 'edit_theme_options', $this->options_page, array( $this, 'write_page' ) );
+		$page_slug = add_theme_page( THEME_NAME, esc_html__( 'Theme Options', 'theme-options' ), 'edit_theme_options', $this->options_page, array( $this, 'write_page' ) );
 		add_action( 'admin_print_scripts-' . $page_slug, array( $this, 'enqueue_script' ) );
 		add_action( 'admin_print_styles-' . $page_slug, array( $this, 'enqueue_style' ) );
 	}
