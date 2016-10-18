@@ -14,6 +14,8 @@ namespace ThemeOptions;
 
 include  'lib/constants.php';
 
+load_plugin_textdomain( 'theme-options', false, '../themes/' . get_template() . '/options/languages' );
+
 require_once LIB_PATH . '/class-theme-options.php';
 
 new Theme_Options();

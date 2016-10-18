@@ -80,10 +80,10 @@ class Theme_Options {
 
 		foreach ( $this->config['addons'] as $addon_id ) {
 			$config = Config::get( '', $addon_id );
-			$label = sprintf( __( '"%s" is not available,', 'theme-options' ), $addon_id );
+			$label = sprintf( __( '"%s" is not available.', 'theme-options' ), $addon_id );
 			$type = 'disabled';
 			if ( ! empty( $config ) && isset( $config['display_name'] ) ) {
-				$label = 'Use ' . $config['display_name'];
+				$label = sprintf( __( 'Use %s.', 'theme-options' ), $config['display_name'] );
 				$type = 'checkbox';
 			}
 			$input_fields[] = array(
@@ -115,7 +115,7 @@ class Theme_Options {
 	}
 
 	function register_admin_menu() {
-	 	$page_slug = add_theme_page( THEME_NAME, esc_html__( 'Theme Options', 'theme-options' ), 'edit_theme_options', $this->options_page, array( $this, 'write_page' ) );
+		$page_slug = add_theme_page( THEME_NAME, esc_html__( 'Theme Options', 'theme-options' ), 'edit_theme_options', $this->options_page, array( $this, 'write_page' ) );
 		add_action( 'admin_print_scripts-' . $page_slug, array( $this, 'enqueue_script' ) );
 		add_action( 'admin_print_styles-' . $page_slug, array( $this, 'enqueue_style' ) );
 	}
