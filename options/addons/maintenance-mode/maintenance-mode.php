@@ -26,7 +26,11 @@ class Maintenance_Mode {
 	public function display_under_maintenance() {
 		$options = $this->obj_options->get_option( $this->options_name );
 		if ( isset( $options['is_maintenance_mode'] ) && 'on' === $options['is_maintenance_mode'] ) {
-			if ( ! is_user_logged_in() ) {
+			$user_login_status = true;
+			if ( isset( $options['is-non-logged-in'] )  && 'on' === $options['is-non-logged-in'] ) {
+				$user_login_status = ! is_user_logged_in();
+			}
+			if ( $user_login_status ) {
 				if ( is_home() || is_front_page() ) {
 						echo '<!DOCTYPE html>
 						<html lang="ja">
@@ -50,19 +54,19 @@ class Maintenance_Mode {
 									font-size:larger;
 								}
 							</style>
-						  <title>' .  get_bloginfo( 'name' ) . ' - ' .  get_bloginfo( 'description' ) . '</title>
+						  <title>' . get_bloginfo('name') . ' - ' . get_bloginfo('description') . '</title>
 						</head>
 						<body>
 							<div class="all">
-								<div class="title">メンテナンス中</div>
-								<div>期間: 平成28年9月28日から30日まで</div>
-								<div class="title">お問い合わせ</div>
-								<div>
-									XXXXXX<br/>
-									〒XXX-XXXX XXXXXXXXXX<br/>
-									TEL: XX-XXXX-XXXX<br/>
-									FAX: XX-XXXX-XXXX<br/>
-									E-Mail: XX@XXXXXXX
+								<div class="title">' . esc_html__( 'UNDER MAINTENANCE', 'theme-options' ) . '</div>
+								<div>期間: ' . $options['maintenance-period'] . '</div>
+								<div class="title">' . esc_html__( 'Contact us', 'theme-options' ) . '</div>
+								<div>'
+									. $options['contact-name'] . '<br/>'
+									. $options['contact-address'] . '<br/>
+									TEL: ' . $options['contact-tel'] . '<br/>
+									FAX: ' . $options['contact-fax'] . '<br/>
+									E-Mail: ' . get_option('admin_email') . '
 								</div>
 							</div>
 						</body>

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: modular-theme-options\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-18 15:21+0900\n"
-"PO-Revision-Date: 2016-10-18 15:21+0900\n"
+"POT-Creation-Date: 2016-10-18 17:13+0900\n"
+"PO-Revision-Date: 2016-10-18 17:21+0900\n"
 "Last-Translator: Takuma Yamanaka <archer@sanpeiyt.com>\n"
 "Language-Team: \n"
 "Language: ja\n"
@@ -45,43 +45,99 @@ msgstr "例: 0.93 (デフォルト: 1.0)"
 msgid "Maintenance Mode Settings"
 msgstr "メンテナンスモード"
 
-#: addons/maintenance-mode/config.php:34
+#: addons/maintenance-mode/config.php:30
+msgid "Display content"
+msgstr "表示内容"
+
+#: addons/maintenance-mode/config.php:39
 msgid "Be maintenance mode"
 msgstr "メンテナンスモードにする"
 
-#: config.php:20
+#: addons/maintenance-mode/config.php:46
+msgid "Only non-logged in user"
+msgstr "ログインしていないユーザーを対象にする"
+
+#: addons/maintenance-mode/config.php:51
+msgid "Period"
+msgstr "期間"
+
+#: addons/maintenance-mode/config.php:53
+msgid "Period of maintenance. Free text."
+msgstr "メンテナンス期間。自由文。"
+
+#: addons/maintenance-mode/config.php:58
+msgid "Name"
+msgstr "名前"
+
+#: addons/maintenance-mode/config.php:60
+msgid "Your name"
+msgstr "連絡先の名前"
+
+#: addons/maintenance-mode/config.php:65
+msgid "Address"
+msgstr "住所"
+
+#: addons/maintenance-mode/config.php:67
+msgid "Your address"
+msgstr "連絡先の住所"
+
+#: addons/maintenance-mode/config.php:72
+msgid "TEL"
+msgstr "電話番号"
+
+#: addons/maintenance-mode/config.php:74
+msgid "Your tel number"
+msgstr "連絡先の電話番号"
+
+#: addons/maintenance-mode/config.php:79
+msgid "FAX"
+msgstr "FAX"
+
+#: addons/maintenance-mode/config.php:81
+msgid "Your fax number"
+msgstr "連絡先のFAX番号"
+
+#: addons/maintenance-mode/maintenance-mode.php:61
+msgid "UNDER MAINTENANCE"
+msgstr "メンテナンス中"
+
+#: addons/maintenance-mode/maintenance-mode.php:63
+msgid "Contact us"
+msgstr "お問い合わせ"
+
+#: config.php:18
 msgid "Settings"
 msgstr "基本設定"
 
-#: config.php:29
+#: config.php:27
 msgid "Usable add-ons"
 msgstr "利用可能なアドオン"
 
-#: config.php:34
+#: config.php:32
 msgid "SECTION TITLE 2"
 msgstr "セクション2のタイトル"
 
-#: config.php:35
+#: config.php:33
 msgid "SECTION SUMMARY 2"
 msgstr "セクション2の概要"
 
-#: config.php:39
+#: config.php:37
 msgid "SECTION TITLE 3"
 msgstr "セクション3のタイトル"
 
-#: config.php:40
+#: config.php:38
 msgid "SECTION SUMMARY 3"
 msgstr "セクション3の概要"
 
-#: frontends/class-material.php:20 lib/class-theme-options.php:123
+#: frontends/class-material.php:20 lib/class-theme-options.php:118
 msgid "Theme Options"
 msgstr "テーマオプション"
 
-#: lib/class-theme-options.php:75
+#: lib/class-theme-options.php:70
 msgid "Welcome. Here is theme options."
 msgstr "テーマオプションはこちら。"
 
-#: lib/class-theme-options.php:88
+#: lib/class-theme-options.php:83
 #, php-format
 msgid "\"%s\" is not available."
 msgstr "\"%s\" は利用できない状態です。"
