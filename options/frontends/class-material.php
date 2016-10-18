@@ -4,7 +4,7 @@ Plugin Name: Theme Options
 Author: Takuma Yamanaka
 Plugin URI:
 Description: More portable, simpler. A options framework for WordPress themes.
-Version: 0.2.0
+Version: 0.3.0
 Author URI: https://github.com/sanpei1978
 Domain Path: /languages
 Text Domain: theme-options
@@ -24,7 +24,7 @@ class Material_Ui_Lite {
 			<?php
 			if ( ! empty( $options ) ) {
 				foreach ( $options as $addon_id => $is_active ) {
-					if ( 'on' === $is_active ) {
+					if ( 'on' === $is_active && isset( $addons[ $addon_id ] ) ) {
 						echo '<a href="#panel-' , $addon_id , '" class="mdl-tabs__tab">' , $addons[ $addon_id ]->display_name , '</a>';
 					}
 				}
@@ -42,7 +42,7 @@ class Material_Ui_Lite {
 					<?php
 					if ( ! empty( $options ) ) {
 						foreach ( $options as $addon_id => $is_active ) {
-							if ( 'on' === $is_active ) {
+							if ( 'on' === $is_active && isset( $addons[ $addon_id ] ) ) {
 								echo '<div class="mdl-tabs__panel" id="panel-' , $addon_id , '">';
 								echo '<form method="post" action="' , esc_html( $addons[ $addon_id ]->form_action ), '" id="' , $addons[ $addon_id ]->options_name, '">';
 								$addons[ $addon_id ]->fill_fields();
