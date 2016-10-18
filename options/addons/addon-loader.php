@@ -23,5 +23,13 @@ class Addon_Loader extends Addon_Loader_Base {
 		if ( 'maintenance-mode' === $addon_id ) {
 			new Addon\Maintenance_Mode( $this->options_name, $this->obj_options );
 		}
+		if ( 'setting-pages' === $addon_id ) {
+			new Addon\Setting_Pages( $this->options_name, $this->obj_options );
+		}
+		/*
+		if ( 'PLUGIN_ID' === $addon_id ) {
+			new Addon\PLUGIN_CLASS( $this->options_name, $this->obj_options );
+		}
+		*/
 	}
 }

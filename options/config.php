@@ -19,7 +19,7 @@ return [
 	'domain' => 'sanpeity',
 	'loader_id' => 'theme_options',
 	'obj_options' => new \SettingStore\Wp_Settings(), // The way of data store.
-	'addons' => [ 'login-page', 'maintenance-mode' ], // Using add-ons.
+	'addons' => [ 'login-page', 'maintenance-mode', 'setting-pages' ], // Using add-ons.
 	'frontend' => 'material', // or bootstrap(but not implement yet.)
 	'setting_sections' => [
 		[
