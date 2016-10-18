@@ -46,7 +46,10 @@ class Theme_Options {
 		if ( ! empty( $options ) ) {
 			foreach ( $options as $addon_id => $is_active ) {
 				if ( 'on' === $is_active ) {
-					$this->addons_actived[ $addon_id ] = new Addon_Loader( $addon_id, $this->config['loader_id'], Config::get( '', $addon_id ) ); // Load add-on.
+					$config = Config::get( '', $addon_id );
+					if ( isset( $config['obj_options'] ) ) {
+						$this->addons_actived[ $addon_id ] = new Addon_Loader( $addon_id, $this->config['loader_id'], $config ); // Load add-on.
+					}
 				}
 			}
 		}
@@ -77,7 +80,7 @@ class Theme_Options {
 
 		foreach ( $this->config['addons'] as $addon_id ) {
 			$config = Config::get( '', $addon_id );
-			$label = __( '(You cannot use.)', 'theme-options' );
+			$label = sprintf( __( '"%s" is not available,', 'theme-options' ), $addon_id );
 			$type = 'disabled';
 			if ( ! empty( $config ) && isset( $config['display_name'] ) ) {
 				$label = 'Use ' . $config['display_name'];
@@ -103,7 +106,7 @@ class Theme_Options {
 		$options = $this->obj_options->get_option( $this->options_name );
 		if ( ! empty( $options ) ) {
 			foreach ( $options as $addon_id => $is_active ) {
-				if ( 'on' === $is_active ) {
+				if ( 'on' === $is_active && ! empty( Config::get( 'obj_options', $addon_id ) ) ) {
 					$this->addons_actived[ $addon_id ]->initialize();
 				}
 			}
