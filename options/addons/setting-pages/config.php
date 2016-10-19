@@ -1,9 +1,9 @@
 <?php
 /*
-Plugin Name: Theme Options
+Plugin Name: Modular Theme Options
 Author: Takuma Yamanaka
 Plugin URI:
-Description: More portable, simpler. A options framework for WordPress themes.
+Description: A framework designed to facilitate the development of WordPress Themes options.
 Version: 0.4.0
 Author URI: https://github.com/sanpei1978
 Domain Path: /languages
