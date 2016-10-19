@@ -39,7 +39,7 @@ const ADDON_DIR = ADMIN_DIR . '/addons';
 const INCLUDES_PATH = ADMIN_PATH . '/includes';
 const JS_DIR = ADMIN_DIR . '/assets/js';
 const JS_PATH = ADMIN_PATH . '/assets/js';
-const FRONTEND_PATH = ADMIN_PATH . '/frontends';
+const FRONTEND_PATH = INCLUDES_PATH . '/frontends';
 
 if ( ! defined( 'THEME_NAME__' ) ) {
 	define( 'THEME_NAME__', $theme_name );
