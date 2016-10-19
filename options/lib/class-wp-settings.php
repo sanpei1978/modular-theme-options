@@ -17,7 +17,7 @@ namespace ThemeOptions\SettingStore;
 require_once \ThemeOptions\LIB_PATH . '/interface-options.php';
 require_once \ThemeOptions\LIB_PATH . '/class-wp-settings-abstract.php';
 
-class Wp_Settings extends Wp_Settings_Abstract implements Interface_Options {
+class WP_Settings extends WP_Options_Abstract implements Interface_Options {
 
 	private $options_page = '';
 	private $options_group = '';

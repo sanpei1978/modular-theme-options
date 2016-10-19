@@ -12,7 +12,7 @@ Text Domain: theme-options
 
 namespace ThemeOptions\SettingStore;
 
-abstract class Wp_Settings_Abstract {
+abstract class WP_Options_Abstract {
 
 	const FORM_ACTION = 'options.php';
 
