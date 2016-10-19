@@ -33,7 +33,7 @@ class Material_Ui_Lite {
 			  </div>
 				<div class="mdl-tabs__panel is-active" id="panel-setting">
 					<?php
-					echo '<form method="post" action="' , esc_html( $obj_options->FORM_ACTION ) , '" id="' , $options_name , '">';
+					echo '<form method="post" action="' , esc_attr( $obj_options->form_action ) , '" id="' , $options_name , '">';
 					$obj_options->fill();
 					submit_button( __( 'Save Changes' ), 'primary large', 'submit', true, array( 'form' => $options_name ) );
 					echo '</form>';
@@ -44,7 +44,7 @@ class Material_Ui_Lite {
 						foreach ( $options as $addon_id => $is_active ) {
 							if ( 'on' === $is_active && isset( $addons[ $addon_id ] ) ) {
 								echo '<div class="mdl-tabs__panel" id="panel-' , $addon_id , '">';
-								echo '<form method="post" action="' , esc_html( $addons[ $addon_id ]->form_action ), '" id="' , $addons[ $addon_id ]->options_name, '">';
+								echo '<form method="post" action="' , esc_attr( $addons[ $addon_id ]->form_action ), '" id="' , $addons[ $addon_id ]->options_name, '">';
 								$addons[ $addon_id ]->fill_fields();
 								submit_button( __( 'Save Changes' ), 'primary large', 'submit', true, array( 'form' => $addons[ $addon_id ]->options_name ) );
 								echo '</form>';

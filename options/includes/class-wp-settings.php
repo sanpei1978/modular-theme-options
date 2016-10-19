@@ -26,6 +26,12 @@ class WP_Settings extends WP_Options_Abstract implements Interface_Options {
 	private $options_sections = array();
 	private $all_field_ids = array();
 
+	private $form_action = '';
+
+	public function __construct() {
+		$this->form_action = 'options.php';
+	}
+
 	public function initialize( $options_page, $options_group, $setting_sections, $options_name, $input_fields ) {
 
 		$this->options_page = $options_page;
@@ -73,8 +79,8 @@ class WP_Settings extends WP_Options_Abstract implements Interface_Options {
 	}
 
 	public function __get( $prop_name ) {
-		if ( 'FORM_ACTION' === $prop_name ) {
-			return self::FORM_ACTION;
+		if ( 'form_action' === $prop_name ) {
+			return $this->form_action;
 		}
 	}
 

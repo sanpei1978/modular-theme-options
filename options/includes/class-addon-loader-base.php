@@ -38,7 +38,7 @@ class Addon_Loader_Base implements Interface_Addon_Loader {
 		$this->obj_options = $config['obj_options'];
 
 		$this->display_name = $config['display_name'];
-		$this->form_action = $this->obj_options->FORM_ACTION;
+		$this->form_action = $this->obj_options->form_action;
 
 		require_once( ADDON_PATH . '/' . $addon_id . '/' . $addon_id . '.php' );
 

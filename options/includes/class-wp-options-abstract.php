@@ -14,8 +14,6 @@ namespace ThemeOptions\SettingStore;
 
 abstract class WP_Options_Abstract {
 
-	const FORM_ACTION = 'options.php';
-
 	public function add_option( $option, $value, $deprecated = '', $autoload = 'yes' ) {
 		return add_option( $option, $value, $autoload, $autoload );
 	}
