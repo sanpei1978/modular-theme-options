@@ -10,7 +10,7 @@ Domain Path: /languages
 Text Domain: theme-options
 */
 
-namespace SettingStore;
+namespace ThemeOptions\SettingStore;
 
 interface Interface_Options {
 

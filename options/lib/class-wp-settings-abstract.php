@@ -10,7 +10,7 @@ Domain Path: /languages
 Text Domain: theme-options
 */
 
-namespace SettingStore;
+namespace ThemeOptions\SettingStore;
 
 abstract class Wp_Settings_Abstract {
 

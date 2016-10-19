@@ -12,14 +12,12 @@ Text Domain: theme-options
 
 namespace ThemeOptions;
 
-use SettingStore\Wp_Settings;
-
 require_once LIB_PATH . '/class-wp-settings.php';
 
 return [
 	'display_name' => __( 'Login Page Settings', 'theme-options' ),
 	'domain' => 'sanpeity',
-	'obj_options' => new Wp_Settings(), // The way of data store.
+	'obj_options' => new SettingStore\Wp_Settings(), // The way of data store.
 	'addons' => [], // Using other add-ons in the add-on. Next feature.
 	'setting_sections' => [
 		[

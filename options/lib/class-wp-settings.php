@@ -12,7 +12,7 @@ Text Domain: theme-options
 
 // Designated class for the Settings API on WordPress
 
-namespace SettingStore;
+namespace ThemeOptions\SettingStore;
 
 require_once \ThemeOptions\LIB_PATH . '/interface-options.php';
 require_once \ThemeOptions\LIB_PATH . '/class-wp-settings-abstract.php';
@@ -108,7 +108,7 @@ class Wp_Settings extends Wp_Settings_Abstract implements Interface_Options {
 		//get_settings_errors('test');
 		//settings_errors('test');
 
-		\FrontEnd\Front_End::write_input_field( $field_id, $input_type, $field_name, $input_label, $options );
+		\ThemeOptions\FrontEnd\Front_End::write_input_field( $field_id, $input_type, $field_name, $input_label, $options );
 	}
 
 }
