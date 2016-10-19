@@ -140,8 +140,8 @@ class Theme_Options {
 	}
 
 	public function enqueue_style( $hook_suffix ) {
-		wp_enqueue_style( 'material-icon', 'https://fonts.googleapis.com/icon?family=Material+Icons', array(), '', 'all' );
 		if ( 'material' === $this->config['frontend'] ) {
+			wp_enqueue_style( 'material-icon', 'https://fonts.googleapis.com/icon?family=Material+Icons', array(), '', 'all' );
 			wp_enqueue_style( 'material', 'https://code.getmdl.io/1.2.1/material.blue-light_blue.min.css', array( 'material-icon' ), '', 'all' );
 		}
 		if ( 'bootstrap' === $this->config['frontend'] ) {
