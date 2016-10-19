@@ -12,7 +12,7 @@ Text Domain: theme-options
 
 namespace ThemeOptions;
 
-require_once LIB_PATH . '/interface-addon-loader.php';
+require_once INCLUDES_PATH . '/interface-addon-loader.php';
 
 class Addon_Loader_Base implements Interface_Addon_Loader {
 

@@ -16,7 +16,7 @@ use \ThemeOptions\Config;
 
 require_once 'class-material.php';
 require_once 'class-bootstrap.php';
-require_once \ThemeOptions\LIB_PATH . '/class-config.php';
+require_once \ThemeOptions\INCLUDES_PATH . '/class-config.php';
 
 if ( 'material' === Config::get( 'frontend' ) ) {
 	class Front_End extends Material_Ui_Lite {

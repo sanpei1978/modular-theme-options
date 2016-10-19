@@ -12,7 +12,7 @@ Text Domain: theme-options
 
 namespace ThemeOptions;
 
-require_once LIB_PATH . '/class-config.php';
+require_once INCLUDES_PATH . '/class-config.php';
 require_once ADDON_PATH . '/addon-loader.php';
 require_once FRONTEND_PATH . '/class-frontend.php';
 

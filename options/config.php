@@ -12,7 +12,7 @@ Text Domain: theme-options
 
 namespace ThemeOptions;
 
-require_once LIB_PATH . '/class-wp-settings.php';
+require_once INCLUDES_PATH . '/class-wp-settings.php';
 
 return [
 	'display_name' => __( 'Settings', 'theme-options' ),

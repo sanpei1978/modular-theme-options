@@ -14,8 +14,8 @@ Text Domain: theme-options
 
 namespace ThemeOptions\SettingStore;
 
-require_once \ThemeOptions\LIB_PATH . '/interface-options.php';
-require_once \ThemeOptions\LIB_PATH . '/class-wp-options-abstract.php';
+require_once \ThemeOptions\INCLUDES_PATH . '/interface-options.php';
+require_once \ThemeOptions\INCLUDES_PATH . '/class-wp-options-abstract.php';
 
 class WP_Settings extends WP_Options_Abstract implements Interface_Options {
 
