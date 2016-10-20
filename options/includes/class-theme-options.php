@@ -125,6 +125,7 @@ class Theme_Options {
 	public function write_page() {
 		//$options = $this->obj_options->get_option( $this->options_name );
 		$options = $this->obj_options->get_option();
+		$this->obj_options->set_option( $options );
 		FrontEnd\Front_End::write_container( $options, $this->addons_actived, $this->obj_options, $this->options_name, $this->config['display_name'] );
 	}
 

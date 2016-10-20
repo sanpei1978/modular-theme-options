@@ -39,6 +39,10 @@ class WP_Settings extends WP_Options_Abstract implements Interface_Options {
 		return $this->options = get_option( $this->options_name, $default );
 	}
 
+	public function set_option( $options ) {
+		$this->options = $options;
+	}
+
 	public function initialize( $options_page, $options_group, $setting_sections, $input_fields ) {
 		$this->options_page = $options_page;
 		$this->options_group = $options_group;
@@ -115,7 +119,7 @@ class WP_Settings extends WP_Options_Abstract implements Interface_Options {
 		$input_type = $args[1];
 		$field_name = $this->options_name . '[' . $field_id . ']';
 		$input_label = $args[2];
-		$this->options = $this->get_option();
+		//$this->options = $this->get_option();
 		//get_settings_errors('test');
 		//settings_errors('test');
 

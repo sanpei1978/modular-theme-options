@@ -18,6 +18,7 @@ interface Interface_Options {
 	public function update_option( $option, $newvalue, $autoload = null );
 	public function get_option( $default = false );
 	public function delete_option( $option );
+	public function set_option( $option );
 	public function initialize(
 		$options_page = '',
 		$options_group = '',

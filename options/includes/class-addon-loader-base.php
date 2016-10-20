@@ -54,6 +54,7 @@ class Addon_Loader_Base implements Interface_Addon_Loader {
 	}
 
 	public function fill_fields() {
+		$this->obj_options->set_option( $this->obj_options->get_option() );
 		$this->obj_options->fill();
 	}
 
