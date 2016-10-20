@@ -22,10 +22,6 @@ abstract class WP_Options_Abstract {
 		return update_option( $option, $newvalue, $autoload );
 	}
 
-	public function get_option( $option, $default = false ) {
-		return get_option( $option, $default );
-	}
-
 	public function delete_option( $option ) {
 		return delete_option( $option );
 	}

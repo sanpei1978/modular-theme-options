@@ -21,7 +21,7 @@ class Setting_Pages {
 		$this->options_name = $options_name;
 		$this->obj_options = $obj_options;
 		if ( current_user_can( 'administrator' ) ) {
-			$options = $this->obj_options->get_option( $this->options_name );
+			$options = $this->obj_options->get_option();
 			if ( isset( $options['is-add-settings-user-profile'] ) && 'on' === $options['is-add-settings-user-profile'] ) {
 				add_action( 'show_user_profile', array( $this, 'add_settings_user_profile' ), 100 );
 				add_action( 'edit_user_profile', array( $this, 'add_settings_user_profile' ), 100 );

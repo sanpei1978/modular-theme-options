@@ -24,7 +24,7 @@ class Maintenance_Mode {
 	}
 
 	public function display_under_maintenance() {
-		$options = $this->obj_options->get_option( $this->options_name );
+		$options = $this->obj_options->get_option();
 		if ( isset( $options['is_maintenance_mode'] ) && 'on' === $options['is_maintenance_mode'] ) {
 			$user_login_status = true;
 			if ( isset( $options['is-non-logged-in'] )  && 'on' === $options['is-non-logged-in'] ) {

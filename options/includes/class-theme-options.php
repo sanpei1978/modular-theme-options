@@ -13,6 +13,7 @@ Text Domain: theme-options
 namespace ThemeOptions;
 
 require_once INCLUDES_PATH . '/class-config.php';
+require_once INCLUDES_PATH . '/class-options.php';
 require_once ADDON_PATH . '/addon-loader.php';
 require_once FRONTEND_PATH . '/class-frontend.php';
 
@@ -33,7 +34,7 @@ class Theme_Options {
 		$this->options_group = $this->config['loader_id'];
 		$this->options_name = $this->config['domain'] . '_' . $this->options_group;
 
-		$this->obj_options = $this->config['obj_options'];
+		$this->obj_options = new SettingStore\Options( $this->options_name );
 
 		add_action( 'load-themes.php', array( $this, 'activate_admin_notice' ) );
 		add_action( 'admin_init', array( $this, 'initialize_theme_admin' ) );
@@ -42,7 +43,7 @@ class Theme_Options {
 		add_filter( 'script_loader_tag', array( $this, 'change_enqueued_script_type' ), 10, 2 );
 		add_filter( 'style_loader_tag', array( $this, 'change_enqueued_style_type' ), 10, 2 );
 
-		$options = $this->obj_options->get_option( $this->options_name );
+		$options = $this->obj_options->get_option();
 		if ( ! empty( $options ) ) {
 			foreach ( $options as $addon_id => $is_active ) {
 				if ( 'on' === $is_active ) {
@@ -99,11 +100,12 @@ class Theme_Options {
 			$this->options_page,
 			$this->options_group,
 			$this->config['setting_sections'],
-			$this->options_name,
+			//$this->options_name,
 			$input_fields
 		);
 
-		$options = $this->obj_options->get_option( $this->options_name );
+		//$options = $this->obj_options->get_option( $this->options_name );
+		$options = $this->obj_options->get_option();
 		if ( ! empty( $options ) ) {
 			foreach ( $options as $addon_id => $is_active ) {
 				if ( 'on' === $is_active && ! empty( Config::get( 'obj_options', $addon_id ) ) ) {
@@ -121,7 +123,8 @@ class Theme_Options {
 	}
 
 	public function write_page() {
-		$options = $this->obj_options->get_option( $this->options_name );
+		//$options = $this->obj_options->get_option( $this->options_name );
+		$options = $this->obj_options->get_option();
 		FrontEnd\Front_End::write_container( $options, $this->addons_actived, $this->obj_options, $this->options_name, $this->config['display_name'] );
 	}
 

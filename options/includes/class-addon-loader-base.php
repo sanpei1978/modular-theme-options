@@ -35,7 +35,7 @@ class Addon_Loader_Base implements Interface_Addon_Loader {
 		$this->options_name = $config['domain'] . '_' . $loader_id . '_' . $addon_id;
 		$this->input_fields = $config['input_fields'];
 
-		$this->obj_options = $config['obj_options'];
+		$this->obj_options = new SettingStore\Options( $this->options_name );
 
 		$this->display_name = $config['display_name'];
 		$this->form_action = $this->obj_options->form_action;
@@ -49,7 +49,6 @@ class Addon_Loader_Base implements Interface_Addon_Loader {
 			$this->options_page,
 			$this->options_group,
 			$this->setting_sections,
-			$this->options_name,
 			$this->input_fields
 		);
 	}

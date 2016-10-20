@@ -17,7 +17,7 @@ require_once INCLUDES_PATH . '/class-wp-settings.php';
 return [
 	'display_name' => __( 'Login Page Settings', 'theme-options' ),
 	'domain' => 'sanpeity',
-	'obj_options' => new SettingStore\WP_Settings(), // The way of data store.
+	'obj_options' => 'wp-settings', // The way of data store.
 	'addons' => [], // Using other add-ons in the add-on. Next feature.
 	'setting_sections' => [
 		[

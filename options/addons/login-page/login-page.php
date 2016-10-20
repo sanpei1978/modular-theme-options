@@ -44,7 +44,7 @@ class Login_Page {
 	}
 
 	public function login_css() {
-		$options = $this->obj_options->get_option( $this->options_name );
+		$options = $this->obj_options->get_option();
 		$bg_img = esc_html( $options['media-upload-bg_img'] );
 		$logo_img = esc_html( $options['media-upload-logo_img'] );
 		$logo_h = esc_html( $options['media-upload-logo_img_h'] );

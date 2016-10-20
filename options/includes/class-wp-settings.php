@@ -23,20 +23,25 @@ class WP_Settings extends WP_Options_Abstract implements Interface_Options {
 	private $options_group = '';
 	private $options_name = '';
 
-	private $options_sections = array();
-	private $all_field_ids = array();
+	private $options_sections = [];
+	private $all_field_ids = [];
 
 	private $form_action = '';
 
-	public function __construct() {
+	private $options = [];
+
+	public function __construct( $options_name ) {
 		$this->form_action = 'options.php';
+		$this->options_name = $options_name;
 	}
 
-	public function initialize( $options_page, $options_group, $setting_sections, $options_name, $input_fields ) {
+	public function get_option( $default = false ) {
+		return $this->options = get_option( $this->options_name, $default );
+	}
 
+	public function initialize( $options_page, $options_group, $setting_sections, $input_fields ) {
 		$this->options_page = $options_page;
 		$this->options_group = $options_group;
-		$this->options_name = $options_name;
 
 		$this->options_sections = $setting_sections;
 		foreach ( $this->options_sections as $section ) {
@@ -66,7 +71,7 @@ class WP_Settings extends WP_Options_Abstract implements Interface_Options {
 			}
 		}
 
-		register_setting( $options_group, $options_name, array( $this, 'sanitize_callback' ) );
+		register_setting( $this->options_group, $this->options_name, array( $this, 'sanitize_callback' ) );
 	}
 
 	public function terminate() {
@@ -110,11 +115,11 @@ class WP_Settings extends WP_Options_Abstract implements Interface_Options {
 		$input_type = $args[1];
 		$field_name = $this->options_name . '[' . $field_id . ']';
 		$input_label = $args[2];
-		$options = $this->get_option( $this->options_name );
+		$this->options = $this->get_option();
 		//get_settings_errors('test');
 		//settings_errors('test');
 
-		\ThemeOptions\FrontEnd\Front_End::write_input_field( $field_id, $input_type, $field_name, $input_label, $options );
+		\ThemeOptions\FrontEnd\Front_End::write_input_field( $field_id, $input_type, $field_name, $input_label, $this->options );
 	}
 
 }
