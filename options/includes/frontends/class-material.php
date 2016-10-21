@@ -10,7 +10,7 @@ Domain Path: /languages
 Text Domain: theme-options
 */
 
-namespace ThemeOptions\FrontEnd;
+namespace ThemeOptions\SettingStore\FrontEnd;
 
 class Material_Ui_Lite {
 
