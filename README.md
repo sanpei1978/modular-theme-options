@@ -17,11 +17,12 @@ It have modular and scalable add-on architecture, so it is programable and porta
 
 ## Next Feature
 
-+ Improvement of the logic for front-end.
++ ~~Improvement of the logic for front-end.~~
 + Supporting more input fields.
 + New Add-ons for this framework.
- + There is a Add-ons "login-page", "maintenance-mode" now.
+ + There are Add-ons "login-page", "maintenance-mode","setting-pages"  now.
 + New wrapper class for the other data store.
+ + There is a data store of the wp_options table used WordPress Settings API.
 
 ## Get Started
 
