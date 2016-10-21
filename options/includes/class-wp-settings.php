@@ -1,21 +1,11 @@
 <?php
-/*
-Plugin Name: Modular Theme Options
-Author: Takuma Yamanaka
-Plugin URI:
-Description: A framework designed to facilitate the development of WordPress Themes options.
-Version: 0.4.0
-Author URI: https://github.com/sanpei1978
-Domain Path: /languages
-Text Domain: theme-options
-*/
 
 // Designated class for the Settings API on WordPress
 
 namespace ThemeOptions\SettingStore;
 
-require_once \ThemeOptions\INCLUDES_PATH . '/interface-options.php';
-require_once \ThemeOptions\INCLUDES_PATH . '/class-wp-options-abstract.php';
+require_once 'interface-options.php';
+require_once 'class-wp-options-abstract.php';
 
 class WP_Settings extends WP_Options_Base implements Interface_Options {
 
@@ -63,10 +53,6 @@ class WP_Settings extends WP_Options_Base implements Interface_Options {
 		do_settings_sections( $this->options_page );
 	}
 
-	public function sanitize_input_field( $input ) {
-		return parent::sanitize_input_field( $input );
-	}
-
 	protected function add_settings_error( $input_id, $input_value, $message ) {
 		add_settings_error( $input_id, $input_value, $message, 'error' );
 	}
@@ -80,20 +66,8 @@ class WP_Settings extends WP_Options_Base implements Interface_Options {
 		}
 	}
 
-	public function write_page( $addons, $options_name, $display_name ) {
-		$options = $this->get_option();
-		$this->set_option( $options );
-		FrontEnd\Front_End::write_container( $options, $addons, $this, $options_name, $display_name );
-	}
-
 	public function write_input_field( array $args ) {
-		//parent::write_input_field( $args );
 		$field_id = esc_html( $args[0] );
-		$input_type = $args[1];
-		$field_name = $this->options_name . '[' . $field_id . ']';
-		$input_label = $args[2];
-		//$this->options = $this->get_option();
-
 		$errors = get_settings_errors( $field_id );
 		foreach ( $errors as $error ) {
 			if ( 'error' === $error['type'] ) {
@@ -101,8 +75,7 @@ class WP_Settings extends WP_Options_Base implements Interface_Options {
 			}
 		}
 		settings_errors( $field_id );
-
-		FrontEnd\Front_End::write_input_field( $field_id, $input_type, $field_name, $input_label, $this->options );
+		parent::write_input_field( $args );
 	}
 
 }

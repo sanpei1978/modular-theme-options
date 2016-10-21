@@ -20,7 +20,7 @@ abstract class WP_Options_Base {
 	protected $options_name = '';
 	protected $input_fields = [];
 
-	private $form_action = '';
+	protected $form_action = '';
 
 	protected $options = [];
 
@@ -31,11 +31,6 @@ abstract class WP_Options_Base {
 		$this->options_name = $options_name;
 		$this->input_fields = $input_field;
 	}
-
-	//public function initialize( $options_page, $options_group, $setting_sections, $input_fields ) {
-	//public function initialize() {//} $input_fields ) {
-		//$this->input_fields = $input_fields;
-	//}
 
 	public function get_option( $default = false ) {
 		return $this->options = get_option( $this->options_name, $default );
@@ -53,15 +48,15 @@ abstract class WP_Options_Base {
 		return update_option( $option, $newvalue, $autoload );
 	}
 
-
 	public function delete_option( $option ) {
 		return delete_option( $option );
 	}
 
-
 	public function __get( $prop_name ) {
 		if ( 'form_action' === $prop_name ) {
 			return $this->form_action;
+		} elseif ( 'options_name' === $prop_name ) {
+			return $this->options_name;
 		}
 	}
 
@@ -116,18 +111,28 @@ abstract class WP_Options_Base {
 			}
 		}
 		return $new_input;
-		/*
-		$new_input = array();
-		for ( $i = 0; $i < count( $this->all_field_ids ); $i++ ) {
-			$all_field_id = esc_attr( $this->all_field_ids[ $i ] );
-			if ( isset( $input[ $all_field_id ] ) ) {
-				$new_input[ $all_field_id ] = $input[ $all_field_id ];
-			}
-		}
-		return $new_input;
-		*/
 	}
 
 	abstract protected function add_settings_error( $input_id, $input_value, $message );
+
+	public function write_page( $addons, $options_name, $display_name ) {
+		$options = $this->get_option();
+		$this->set_option( $options );
+		FrontEnd\Front_End::write_container( $options, $addons, $this, $options_name, $display_name );
+	}
+
+	public function write_input_field( array $args ) {
+		$field_id = esc_html( $args[0] );
+		$input_type = $args[1];
+		$field_name = $this->options_name . '[' . $field_id . ']';
+		$input_label = $args[2];
+		//$this->options = $this->get_option();
+		$input_value = '';
+		if ( isset( $this->options[ $field_id ] ) ) {
+			$input_value = $this->options[ $field_id ];
+		}
+
+		FrontEnd\Front_End::write_input_field( $field_id, $input_type, $field_name, $input_label, $input_value );
+	}
 
 }

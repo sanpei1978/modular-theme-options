@@ -12,29 +12,28 @@ Text Domain: theme-options
 
 namespace ThemeOptions;
 
-require_once INCLUDES_PATH . '/interface-addon-loader.php';
+require_once 'interface-addon-loader.php';
 
 class Addon_Loader_Base implements Interface_Addon_Loader {
 
-	private $options_name;
 	private $obj_options;
 	private $display_name;
-	private $form_action;
 
 	public function __construct( $addon_id, $loader_id, $config ) {
 
-		$this->options_name = $config['domain'] . '_' . $loader_id . '_' . $addon_id;
-
-		$this->obj_options = new SettingStore\Options(
+		$this->obj_options = SettingStore\Options::get(
+			$config['data_store'],
 			$loader_id . '_' . $addon_id,
 			$loader_id . '_' . $addon_id,
 			$config['setting_sections'],
-			$this->options_name,
+			$config['domain'] . '_' . $loader_id . '_' . $addon_id,
 			$config['input_fields']
 		);
+		if ( ! $this->obj_options ) {
+			die( __( 'configration error : data_store', 'theme-options' ) );
+		}
 
 		$this->display_name = $config['display_name'];
-		$this->form_action = $this->obj_options->form_action;
 
 		require_once( ADDON_PATH . '/' . $addon_id . '/' . $addon_id . '.php' );
 
@@ -51,13 +50,13 @@ class Addon_Loader_Base implements Interface_Addon_Loader {
 
 	public function __get( $property_name ) {
 		if ( 'options_name' === $property_name ) {
-			return $this->options_name;
+			return $this->obj_options->options_name;
 		} elseif ( 'obj_options' === $property_name ) {
 			 return $this->obj_options;
 		} elseif ( 'display_name' === $property_name ) {
 			return $this->display_name;
 		} elseif ( 'form_action' === $property_name ) {
-			return $this->form_action;
+			return $this->obj_options->form_action;
 		}
 	}
 

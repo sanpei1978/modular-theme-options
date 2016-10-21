@@ -53,13 +53,17 @@ class Theme_Options {
 			);
 		}
 
-		$this->obj_options = new SettingStore\Options(
+		$this->obj_options = SettingStore\Options::get(//new SettingStore\Options(
+			$this->config['data_store'],
 			$this->options_page,
 			$this->options_group,
 			$this->config['setting_sections'],
 			$this->options_name,
 			$input_fields
 		);
+		if ( ! $this->obj_options ) {
+			die( __( 'configration error : data_store', 'theme-options' ) );
+		}
 
 		add_action( 'load-themes.php', array( $this, 'activate_admin_notice' ) );
 		add_action( 'admin_init', array( $this, 'initialize_theme_admin' ) );
@@ -73,7 +77,7 @@ class Theme_Options {
 			foreach ( $options as $addon_id => $is_active ) {
 				if ( 'on' === $is_active ) {
 					$config = Config::get( '', $addon_id );
-					if ( isset( $config['obj_options'] ) ) {
+					if ( isset( $config['data_store'] ) ) {
 						$this->addons_actived[ $addon_id ] = new Addon_Loader( $addon_id, $this->config['loader_id'], $config ); // Load add-on.
 					}
 				}
@@ -102,28 +106,20 @@ class Theme_Options {
 
 	public function initialize_theme_admin() {
 
-		$this->obj_options->initialize(
-			//$this->options_page,
-			//$this->options_group,
-			//$this->config['setting_sections'],
-			//$this->options_name,
-			//$input_fields
-		);
+		$this->obj_options->initialize();
 
-		//$options = $this->obj_options->get_option( $this->options_name );
 		$options = $this->obj_options->get_option();
 		if ( ! empty( $options ) ) {
 			foreach ( $options as $addon_id => $is_active ) {
-				if ( 'on' === $is_active && ! empty( Config::get( 'obj_options', $addon_id ) ) ) {
+				if ( 'on' === $is_active && ! empty( Config::get( 'data_store', $addon_id ) ) ) {
 					$this->addons_actived[ $addon_id ]->initialize();
 				}
 			}
 		}
-
 	}
 
 	function register_admin_menu() {
-		$page_slug = add_theme_page( THEME_NAME, esc_html__( 'Theme Options', 'theme-options' ), 'edit_theme_options', $this->options_page, array( $this, 'write_page' ) );
+		$page_slug = add_theme_page( esc_html__( 'Theme Options', 'theme-options' ), esc_html__( 'Theme Options', 'theme-options' ), 'edit_theme_options', $this->options_page, array( $this, 'write_page' ) );
 		add_action( 'admin_print_scripts-' . $page_slug, array( $this, 'enqueue_script' ) );
 		add_action( 'admin_print_styles-' . $page_slug, array( $this, 'enqueue_style' ) );
 	}

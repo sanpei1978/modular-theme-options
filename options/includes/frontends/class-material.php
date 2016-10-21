@@ -17,7 +17,7 @@ class Material_Ui_Lite {
 	public static function write_container( $options, $addons, $obj_options, $options_name, $display_name ) {
 		?>
 		<div class="wrap">
-			<h2><?php echo esc_html__( 'Theme Options', 'theme-options' ); ?></h2>
+			<h2><?php echo get_admin_page_title(); ?></h2>
 			<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
 			  <div class="mdl-tabs__tab-bar">
 					<a href="#panel-setting" class="mdl-tabs__tab is-active"><?php echo esc_html( $display_name ); ?></a>
@@ -58,46 +58,32 @@ class Material_Ui_Lite {
 		<?php
 	}
 
-	public static function write_input_field( $field_id, $input_type, $field_name, $input_label, $options ) {
+	public static function write_input_field( $field_id, $input_type, $field_name, $input_label, $input_value ) {
 		switch ( $input_type ) {
 			case 'checkbox':
-				$checked = '';
-				$disabled = '';
-				if ( isset( $options[ $field_id ] ) ) {
-					$checked = checked( $options[ $field_id ], 'on' , false );
-				}
+				$checked = checked( $input_value, 'on' , false );
 				echo '<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="' , $field_id , '">';
-				echo '<input type="checkbox" id="' , $field_id , '" name="' , $field_name , '" class="mdl-checkbox__input" ' , $checked , ' ', $disabled , '>';
+				echo '<input type="checkbox" id="' , $field_id , '" name="' , $field_name , '" class="mdl-checkbox__input" ' , $checked , '>';
 				echo '<span class="mdl-checkbox__label">' , $input_label , '</span>';
 				echo '</label>';
 				break;
 			case 'disabled':
-				$checked = '';
-				$disabled = '';
-				if ( isset( $options[ $field_id ] ) ) {
-					$checked = checked( $options[ $field_id ], 'on', false );
-					$disabled = disabled( 1, 1, false );
-				}
+				$checked = checked( $input_value, 'on', false );
+				$disabled = disabled( 1, 1, false );
 				echo '<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="' , $field_id , '">';
 				echo '<input type="checkbox" id="' , $field_id , '" name="' , $field_name , '" class="mdl-checkbox__input" ' , $checked , ' ', disabled( 1, 1, false ) , '>';
 				echo '<span class="mdl-checkbox__label">' , $input_label , '</span>';
 				echo '</label>';
 				break;
 			case 'text':
-				$value = '';
-				if ( isset( $options[ $field_id ] ) ) {
-					$value = esc_attr( $options[ $field_id ] );
-				}
+				$value = esc_attr( $input_value );
 				echo '<div class="mdl-textfield mdl-js-textfield">
 						<input class="mdl-textfield__input" type="text" id="' , $field_id . '" name="' , $field_name , '" value="' , $value , '">
 							<label class="mdl-textfield__label" for="' , $field_id , '">' , $input_label , '</label>
 							</div>';
 				break;
 			case 'media':
-				$value = '';
-				if ( isset( $options[ $field_id ] ) ) {
-					$value = esc_attr( $options[ $field_id ] );
-				}
+				$value = esc_attr( $input_value );
 				echo '<div class="mdl-textfield mdl-js-textfield">
 							<input class="mdl-textfield__input" type="text" id="' , $field_id . '" name="' , $field_name, '" value="' , $value , '">
 								<label class="mdl-textfield__label" for="' , $field_id , '">', $input_label , '</label>
@@ -110,11 +96,8 @@ class Material_Ui_Lite {
 				echo '</div>';
 				break;
 			case 'hidden':
-				$value = '';
-				if ( isset( $options[ $field_id ] ) ) {
-					$value = esc_attr( $options[ $field_id ] );
-				}
-				echo '<input type="hidden" id="choose-image-' , $field_id , '"name="' , $field_name , '" value="' , $value , '"></div>';
+				$value = esc_attr( $input_value );
+				echo '<input type="hidden" id="choose-image-' , $field_id , '"name="' , $field_name , '" value="' , $value , '">';
 				break;
 			default:
 				break;

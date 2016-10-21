@@ -12,19 +12,27 @@ Text Domain: theme-options
 
 namespace ThemeOptions\SettingStore;
 
-use \ThemeOptions\Config;
-
 require_once 'class-wp-settings.php';
-require_once \ThemeOptions\INCLUDES_PATH . '/class-config.php';
+require_once 'class-wp-options.php';
 
-if ( 'wp-settings' === Config::get( 'obj_options' ) ) {
-	class Options extends WP_Settings {
-		// Use base class.
-	}
-}
-
-if ( 'wp-options' === Config::get( 'obj_options' ) ) {
-	class Options extends WP_Options {
-		// Use base class.
+class Options {
+	public static function get( $data_store_id, $options_page, $optons_group, $options_sections, $options_name, $input_field ) {
+		$data_store_class = '';
+		if ( 'wp-settings' === $data_store_id ) {
+			$data_store_class = 'ThemeOptions\SettingStore\WP_Settings';
+		} elseif ( 'wp-options' === $data_store_id ) {
+			$data_store_class = 'ThemeOptions\SettingStore\WP_Options';
+		}
+		if ( $data_store_class ) {
+			return new $data_store_class(
+				$options_page,
+				$optons_group,
+				$options_sections,
+				$options_name,
+				$input_field
+			);
+		} else {
+			return false;
+		}
 	}
 }
