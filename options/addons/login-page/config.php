@@ -33,6 +33,10 @@ return [
 			'type' => 'media',
 			'label' => __( 'Place of a image file', 'theme-options' ),
 			'section' => 'setting_section_login_page_1',
+			'validate' => [
+				'rule' => 'url',
+				'message' => __( 'Invalid url.', 'theme-options' ),
+			],
 		],
 		[
 			'id' => 'media-upload-logo_img',
@@ -40,6 +44,10 @@ return [
 			'type' => 'media',
 			'label' => __( 'Place of a image file', 'theme-options' ),
 			'section' => 'setting_section_login_page_1',
+			'validate' => [
+				'rule' => 'url',
+				'message' => __( 'Invalid url.', 'theme-options' ),
+			],
 		],
 		[
 			'id' => 'media-upload-logo_img_h',
@@ -54,6 +62,10 @@ return [
 			'type' => 'text',
 			'label' => __( 'default: 1.0, e.g. 0.93.', 'theme-options' ),
 			'section' => 'setting_section_login_page_1',
+			'validate' => [
+				'rule' => 'float',
+				'message' => __( 'Invalid opacity.', 'theme-options' ),
+			],
 		],
 	],
 ];

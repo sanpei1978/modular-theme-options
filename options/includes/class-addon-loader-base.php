@@ -16,26 +16,22 @@ require_once INCLUDES_PATH . '/interface-addon-loader.php';
 
 class Addon_Loader_Base implements Interface_Addon_Loader {
 
-	private $options_page;
-	private $options_group;
-	private $setting_sections;
 	private $options_name;
-	private $input_fields;
-
 	private $obj_options;
-
 	private $display_name;
 	private $form_action;
 
 	public function __construct( $addon_id, $loader_id, $config ) {
 
-		$this->options_page = $loader_id . '_' . $addon_id;
-		$this->options_group = $loader_id . '_' . $addon_id;
-		$this->setting_sections = $config['setting_sections'];
 		$this->options_name = $config['domain'] . '_' . $loader_id . '_' . $addon_id;
-		$this->input_fields = $config['input_fields'];
 
-		$this->obj_options = new SettingStore\Options( $this->options_name );
+		$this->obj_options = new SettingStore\Options(
+			$loader_id . '_' . $addon_id,
+			$loader_id . '_' . $addon_id,
+			$config['setting_sections'],
+			$this->options_name,
+			$config['input_fields']
+		);
 
 		$this->display_name = $config['display_name'];
 		$this->form_action = $this->obj_options->form_action;
@@ -45,12 +41,7 @@ class Addon_Loader_Base implements Interface_Addon_Loader {
 	}
 
 	public function initialize() {
-		$this->obj_options->initialize(
-			$this->options_page,
-			$this->options_group,
-			$this->setting_sections,
-			$this->input_fields
-		);
+		$this->obj_options->initialize();
 	}
 
 	public function fill_fields() {

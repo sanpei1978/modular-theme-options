@@ -19,12 +19,7 @@ interface Interface_Options {
 	public function get_option( $default = false );
 	public function delete_option( $option );
 	public function set_option( $option );
-	public function initialize(
-		$options_page = '',
-		$options_group = '',
-		$setting_sections = array(),
-		$input_fields
-	);
+	public function initialize();
 	public function terminate();
 	public function fill();
 	public function __get( $property_name );
