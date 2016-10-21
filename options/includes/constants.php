@@ -1,14 +1,21 @@
 <?php
-/*
-Plugin Name: Theme Options
-Author: Takuma Yamanaka
-Plugin URI:
-Description: More portable, simpler. A options framework for WordPress themes.
-Version: 0.3.0
-Author URI: https://github.com/sanpei1978
-Domain Path: /languages
-Text Domain: theme-options
-*/
+/**
+ * Copyright (c) 2016 sanpeity (https://github.com/sanpei1978)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License, version 2 or, at
+ * your discretion, any later version, as published by the Free
+ * Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 
 namespace ThemeOptions;
 
@@ -36,10 +43,10 @@ const ADMIN_DIR = ADMIN_DIR__;
 
 const ADDON_PATH = ADMIN_PATH . '/addons';
 const ADDON_DIR = ADMIN_DIR . '/addons';
-const LIB_PATH = ADMIN_PATH . '/lib';
+const INCLUDES_PATH = ADMIN_PATH . '/includes';
 const JS_DIR = ADMIN_DIR . '/assets/js';
 const JS_PATH = ADMIN_PATH . '/assets/js';
-const FRONTEND_PATH = ADMIN_PATH . '/frontends';
+const FRONTEND_PATH = INCLUDES_PATH . '/frontends';
 
 if ( ! defined( 'THEME_NAME__' ) ) {
 	define( 'THEME_NAME__', $theme_name );

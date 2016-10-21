@@ -1,14 +1,21 @@
 <?php
-/*
-Plugin Name: Theme Options
-Author: Takuma Yamanaka
-Plugin URI:
-Description: More portable, simpler. A options framework for WordPress themes.
-Version: 0.3.0
-Author URI: https://github.com/sanpei1978
-Domain Path: /languages
-Text Domain: theme-options
-*/
+/**
+ * Copyright (c) 2016 sanpeity (https://github.com/sanpei1978)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License, version 2 or, at
+ * your discretion, any later version, as published by the Free
+ * Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 
 namespace ThemeOptions\Addon;
 
@@ -44,7 +51,7 @@ class Login_Page {
 	}
 
 	public function login_css() {
-		$options = $this->obj_options->get_option( $this->options_name );
+		$options = $this->obj_options->get_option();
 		$bg_img = esc_html( $options['media-upload-bg_img'] );
 		$logo_img = esc_html( $options['media-upload-logo_img'] );
 		$logo_h = esc_html( $options['media-upload-logo_img_h'] );

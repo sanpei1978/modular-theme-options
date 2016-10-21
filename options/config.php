@@ -1,25 +1,30 @@
 <?php
-/*
-Plugin Name: Theme Options
-Author: Takuma Yamanaka
-Plugin URI:
-Description: More portable, simpler. A options framework for WordPress themes.
-Version: 0.3.0
-Author URI: https://github.com/sanpei1978
-Domain Path: /languages
-Text Domain: theme-options
-*/
+/**
+ * Copyright (c) 2016 sanpeity (https://github.com/sanpei1978)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License, version 2 or, at
+ * your discretion, any later version, as published by the Free
+ * Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 
 namespace ThemeOptions;
-
-require_once LIB_PATH . '/class-wp-settings.php';
 
 return [
 	'display_name' => __( 'Settings', 'theme-options' ),
 	'domain' => 'sanpeity',
 	'loader_id' => 'theme_options',
-	'obj_options' => new \SettingStore\Wp_Settings(), // The way of data store.
-	'addons' => [ 'login-page', 'maintenance-mode' ], // Using add-ons.
+	'data_store' => 'wp-settings', // The way of data store. "wp-options" or "wp-settings"
+	'addons' => [ 'login-page', 'maintenance-mode', 'setting-pages' ], // Using add-ons.
 	'frontend' => 'material', // or bootstrap(but not implement yet.)
 	'setting_sections' => [
 		[

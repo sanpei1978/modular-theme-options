@@ -1,3 +1,4 @@
+<?php
 /**
  * Copyright (c) 2016 sanpeity (https://github.com/sanpei1978)
  *
@@ -16,27 +17,29 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-jQuery(document).ready(function($) {
-	$('.media-button').click(function(e) {
-		e.preventDefault();
-		custom_uploader = wp.media({
-			//title: 'Select Image',
-			library: {
-				type: 'image'
-			},
-			button: {
-				//text: 'Select Image'
-			},
-			multiple: false
-		});
-		custom_uploader.on('select', function() {
-			var images = custom_uploader.state().get('selection');
-			images.each(function(file){
-				$(e.currentTarget).next().html('<img src="'+file.toJSON().url+'" style="width:300px;"/>');
-				$(e.currentTarget).prev().children('input').val(file.toJSON().url);
-				$("#" + e.currentTarget.id + "_h").val(file.toJSON().height);
-			});
-		});
-		custom_uploader.open();
-	});
-});
+namespace ThemeOptions;
+
+class Config {
+
+	private static $config_file_name = 'config.php';
+	private static $configs = [];
+
+	public static function get( $key = '', $addon_id = 'theme_options' ) {
+		$addon_config = ADDON_PATH . '/' . $addon_id . '/' . self::$config_file_name;
+		if ( 'theme_options' === $addon_id ) {
+			$addon_config = ADMIN_PATH . '/' . self::$config_file_name;
+		}
+		if ( ! file_exists( $addon_config ) ) {
+			return [];
+		} else {
+			$temp = require_once( $addon_config );
+			if ( true !== $temp ) {
+					self::$configs[ $addon_id ] = $temp;
+			}
+			if ( empty( $key ) ) {
+				return self::$configs[ $addon_id ];
+			}
+			return self::$configs[ $addon_id ][ $key ];
+		}
+	}
+}

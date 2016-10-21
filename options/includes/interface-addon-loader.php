@@ -1,3 +1,4 @@
+<?php
 /**
  * Copyright (c) 2016 sanpeity (https://github.com/sanpei1978)
  *
@@ -16,27 +17,10 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-jQuery(document).ready(function($) {
-	$('.media-button').click(function(e) {
-		e.preventDefault();
-		custom_uploader = wp.media({
-			//title: 'Select Image',
-			library: {
-				type: 'image'
-			},
-			button: {
-				//text: 'Select Image'
-			},
-			multiple: false
-		});
-		custom_uploader.on('select', function() {
-			var images = custom_uploader.state().get('selection');
-			images.each(function(file){
-				$(e.currentTarget).next().html('<img src="'+file.toJSON().url+'" style="width:300px;"/>');
-				$(e.currentTarget).prev().children('input').val(file.toJSON().url);
-				$("#" + e.currentTarget.id + "_h").val(file.toJSON().height);
-			});
-		});
-		custom_uploader.open();
-	});
-});
+namespace ThemeOptions;
+
+interface Interface_Addon_Loader {
+	public function initialize();
+	public function fill_fields();
+	public function __get( $property_name );
+}

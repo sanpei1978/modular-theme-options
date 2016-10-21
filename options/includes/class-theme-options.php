@@ -1,18 +1,26 @@
 <?php
-/*
-Plugin Name: Theme Options
-Author: Takuma Yamanaka
-Plugin URI:
-Description: More portable, simpler. A options framework for WordPress themes.
-Version: 0.3.0
-Author URI: https://github.com/sanpei1978
-Domain Path: /languages
-Text Domain: theme-options
-*/
+/**
+ * Copyright (c) 2016 sanpeity (https://github.com/sanpei1978)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License, version 2 or, at
+ * your discretion, any later version, as published by the Free
+ * Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 
 namespace ThemeOptions;
 
-require_once LIB_PATH . '/class-config.php';
+require_once INCLUDES_PATH . '/class-config.php';
+require_once INCLUDES_PATH . '/class-options.php';
 require_once ADDON_PATH . '/addon-loader.php';
 require_once FRONTEND_PATH . '/class-frontend.php';
 
@@ -33,7 +41,36 @@ class Theme_Options {
 		$this->options_group = $this->config['loader_id'];
 		$this->options_name = $this->config['domain'] . '_' . $this->options_group;
 
-		$this->obj_options = $this->config['obj_options'];
+		$input_fields = array();
+
+		foreach ( $this->config['addons'] as $addon_id ) {
+			$config = Config::get( '', $addon_id );
+			$label = sprintf( __( '"%s" is not available.', 'theme-options' ), $addon_id );
+			$type = 'disabled';
+			if ( ! empty( $config ) && isset( $config['display_name'] ) ) {
+				$label = sprintf( __( 'Use %s.', 'theme-options' ), $config['display_name'] );
+				$type = 'checkbox';
+			}
+			$input_fields[] = array(
+				'id'		=> $addon_id,
+				'title'	=> '',
+				'label'	=> $label,
+				'type'	=> $type,
+				'section' => 'setting_section_1',
+			);
+		}
+
+		$this->obj_options = SettingStore\Options::get(//new SettingStore\Options(
+			$this->config['data_store'],
+			$this->options_page,
+			$this->options_group,
+			$this->config['setting_sections'],
+			$this->options_name,
+			$input_fields
+		);
+		if ( ! $this->obj_options ) {
+			die( __( 'configration error : data_store', 'theme-options' ) );
+		}
 
 		add_action( 'load-themes.php', array( $this, 'activate_admin_notice' ) );
 		add_action( 'admin_init', array( $this, 'initialize_theme_admin' ) );
@@ -42,12 +79,12 @@ class Theme_Options {
 		add_filter( 'script_loader_tag', array( $this, 'change_enqueued_script_type' ), 10, 2 );
 		add_filter( 'style_loader_tag', array( $this, 'change_enqueued_style_type' ), 10, 2 );
 
-		$options = $this->obj_options->get_option( $this->options_name );
+		$options = $this->obj_options->get_option();
 		if ( ! empty( $options ) ) {
 			foreach ( $options as $addon_id => $is_active ) {
 				if ( 'on' === $is_active ) {
 					$config = Config::get( '', $addon_id );
-					if ( isset( $config['obj_options'] ) ) {
+					if ( isset( $config['data_store'] ) ) {
 						$this->addons_actived[ $addon_id ] = new Addon_Loader( $addon_id, $this->config['loader_id'], $config ); // Load add-on.
 					}
 				}
@@ -76,53 +113,26 @@ class Theme_Options {
 
 	public function initialize_theme_admin() {
 
-		$input_fields = array();
+		$this->obj_options->initialize();
 
-		foreach ( $this->config['addons'] as $addon_id ) {
-			$config = Config::get( '', $addon_id );
-			$label = sprintf( __( '"%s" is not available.', 'theme-options' ), $addon_id );
-			$type = 'disabled';
-			if ( ! empty( $config ) && isset( $config['display_name'] ) ) {
-				$label = sprintf( __( 'Use %s.', 'theme-options' ), $config['display_name'] );
-				$type = 'checkbox';
-			}
-			$input_fields[] = array(
-				'id'		=> $addon_id,
-				'title'	=> '',
-				'label'	=> $label,
-				'type'	=> $type,
-				'section' => 'setting_section_1',
-			);
-		}
-
-		$this->obj_options->initialize(
-			$this->options_page,
-			$this->options_group,
-			$this->config['setting_sections'],
-			$this->options_name,
-			$input_fields
-		);
-
-		$options = $this->obj_options->get_option( $this->options_name );
+		$options = $this->obj_options->get_option();
 		if ( ! empty( $options ) ) {
 			foreach ( $options as $addon_id => $is_active ) {
-				if ( 'on' === $is_active && ! empty( Config::get( 'obj_options', $addon_id ) ) ) {
+				if ( 'on' === $is_active && ! empty( Config::get( 'data_store', $addon_id ) ) ) {
 					$this->addons_actived[ $addon_id ]->initialize();
 				}
 			}
 		}
-
 	}
 
 	function register_admin_menu() {
-		$page_slug = add_theme_page( THEME_NAME, esc_html__( 'Theme Options', 'theme-options' ), 'edit_theme_options', $this->options_page, array( $this, 'write_page' ) );
+		$page_slug = add_theme_page( esc_html__( 'Theme Options', 'theme-options' ), esc_html__( 'Theme Options', 'theme-options' ), 'edit_theme_options', $this->options_page, array( $this, 'write_page' ) );
 		add_action( 'admin_print_scripts-' . $page_slug, array( $this, 'enqueue_script' ) );
 		add_action( 'admin_print_styles-' . $page_slug, array( $this, 'enqueue_style' ) );
 	}
 
 	public function write_page() {
-		$options = $this->obj_options->get_option( $this->options_name );
-		\FrontEnd\Front_End::write_container( $options, $this->addons_actived, $this->obj_options, $this->options_name, $this->config['display_name'] );
+		$this->obj_options->write_page( $this->addons_actived, $this->options_name, $this->config['display_name'] );
 	}
 
 	public function enqueue_script( $hook_suffix ) {
@@ -140,8 +150,8 @@ class Theme_Options {
 	}
 
 	public function enqueue_style( $hook_suffix ) {
-		wp_enqueue_style( 'material-icon', 'https://fonts.googleapis.com/icon?family=Material+Icons', array(), '', 'all' );
 		if ( 'material' === $this->config['frontend'] ) {
+			wp_enqueue_style( 'material-icon', 'https://fonts.googleapis.com/icon?family=Material+Icons', array(), '', 'all' );
 			wp_enqueue_style( 'material', 'https://code.getmdl.io/1.2.1/material.blue-light_blue.min.css', array( 'material-icon' ), '', 'all' );
 		}
 		if ( 'bootstrap' === $this->config['frontend'] ) {
