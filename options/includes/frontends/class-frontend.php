@@ -1,3 +1,4 @@
+<?php
 /**
  * Copyright (c) 2016 sanpeity (https://github.com/sanpei1978)
  *
@@ -16,27 +17,21 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-jQuery(document).ready(function($) {
-	$('.media-button').click(function(e) {
-		e.preventDefault();
-		custom_uploader = wp.media({
-			//title: 'Select Image',
-			library: {
-				type: 'image'
-			},
-			button: {
-				//text: 'Select Image'
-			},
-			multiple: false
-		});
-		custom_uploader.on('select', function() {
-			var images = custom_uploader.state().get('selection');
-			images.each(function(file){
-				$(e.currentTarget).next().html('<img src="'+file.toJSON().url+'" style="width:300px;"/>');
-				$(e.currentTarget).prev().children('input').val(file.toJSON().url);
-				$("#" + e.currentTarget.id + "_h").val(file.toJSON().height);
-			});
-		});
-		custom_uploader.open();
-	});
-});
+namespace ThemeOptions\SettingStore\FrontEnd;
+
+use \ThemeOptions\Config;
+
+require_once 'class-material.php';
+require_once 'class-bootstrap.php';
+require_once \ThemeOptions\INCLUDES_PATH . '/class-config.php';
+
+if ( 'material' === Config::get( 'frontend' ) ) {
+	class Front_End extends Material_Ui_Lite {
+		// Use base class.
+	}
+}
+if ( 'bootstrap' === Config::get( 'frontend' ) ) {
+	class Front_End extends Bootstrap_4 {
+		// Use base class.
+	}
+}

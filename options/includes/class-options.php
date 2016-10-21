@@ -1,3 +1,4 @@
+<?php
 /**
  * Copyright (c) 2016 sanpeity (https://github.com/sanpei1978)
  *
@@ -16,27 +17,29 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-jQuery(document).ready(function($) {
-	$('.media-button').click(function(e) {
-		e.preventDefault();
-		custom_uploader = wp.media({
-			//title: 'Select Image',
-			library: {
-				type: 'image'
-			},
-			button: {
-				//text: 'Select Image'
-			},
-			multiple: false
-		});
-		custom_uploader.on('select', function() {
-			var images = custom_uploader.state().get('selection');
-			images.each(function(file){
-				$(e.currentTarget).next().html('<img src="'+file.toJSON().url+'" style="width:300px;"/>');
-				$(e.currentTarget).prev().children('input').val(file.toJSON().url);
-				$("#" + e.currentTarget.id + "_h").val(file.toJSON().height);
-			});
-		});
-		custom_uploader.open();
-	});
-});
+namespace ThemeOptions\SettingStore;
+
+require_once 'class-wp-settings.php';
+require_once 'class-wp-options.php';
+
+class Options {
+	public static function get( $data_store_id, $options_page, $optons_group, $options_sections, $options_name, $input_field ) {
+		$data_store_class = '';
+		if ( 'wp-settings' === $data_store_id ) {
+			$data_store_class = 'ThemeOptions\SettingStore\WP_Settings';
+		} elseif ( 'wp-options' === $data_store_id ) {
+			$data_store_class = 'ThemeOptions\SettingStore\WP_Options';
+		}
+		if ( $data_store_class ) {
+			return new $data_store_class(
+				$options_page,
+				$optons_group,
+				$options_sections,
+				$options_name,
+				$input_field
+			);
+		} else {
+			return false;
+		}
+	}
+}

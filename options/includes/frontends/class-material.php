@@ -1,23 +1,30 @@
 <?php
-/*
-Plugin Name: Theme Options
-Author: Takuma Yamanaka
-Plugin URI:
-Description: More portable, simpler. A options framework for WordPress themes.
-Version: 0.3.0
-Author URI: https://github.com/sanpei1978
-Domain Path: /languages
-Text Domain: theme-options
-*/
+/**
+ * Copyright (c) 2016 sanpeity (https://github.com/sanpei1978)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License, version 2 or, at
+ * your discretion, any later version, as published by the Free
+ * Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 
-namespace FrontEnd;
+namespace ThemeOptions\SettingStore\FrontEnd;
 
 class Material_Ui_Lite {
 
 	public static function write_container( $options, $addons, $obj_options, $options_name, $display_name ) {
 		?>
 		<div class="wrap">
-			<h2><?php echo esc_html__( 'Theme Options', 'theme-options' ); ?></h2>
+			<h2><?php echo get_admin_page_title(); ?></h2>
 			<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
 			  <div class="mdl-tabs__tab-bar">
 					<a href="#panel-setting" class="mdl-tabs__tab is-active"><?php echo esc_html( $display_name ); ?></a>
@@ -33,7 +40,7 @@ class Material_Ui_Lite {
 			  </div>
 				<div class="mdl-tabs__panel is-active" id="panel-setting">
 					<?php
-					echo '<form method="post" action="' , esc_html( $obj_options->FORM_ACTION ) , '" id="' , $options_name , '">';
+					echo '<form method="post" action="' , esc_attr( $obj_options->form_action ) , '" id="' , $options_name , '">';
 					$obj_options->fill();
 					submit_button( __( 'Save Changes' ), 'primary large', 'submit', true, array( 'form' => $options_name ) );
 					echo '</form>';
@@ -44,7 +51,7 @@ class Material_Ui_Lite {
 						foreach ( $options as $addon_id => $is_active ) {
 							if ( 'on' === $is_active && isset( $addons[ $addon_id ] ) ) {
 								echo '<div class="mdl-tabs__panel" id="panel-' , $addon_id , '">';
-								echo '<form method="post" action="' , esc_html( $addons[ $addon_id ]->form_action ), '" id="' , $addons[ $addon_id ]->options_name, '">';
+								echo '<form method="post" action="' , esc_attr( $addons[ $addon_id ]->form_action ), '" id="' , $addons[ $addon_id ]->options_name, '">';
 								$addons[ $addon_id ]->fill_fields();
 								submit_button( __( 'Save Changes' ), 'primary large', 'submit', true, array( 'form' => $addons[ $addon_id ]->options_name ) );
 								echo '</form>';
@@ -58,46 +65,32 @@ class Material_Ui_Lite {
 		<?php
 	}
 
-	public static function write_input_field( $field_id, $input_type, $field_name, $input_label, $options ) {
+	public static function write_input_field( $field_id, $input_type, $field_name, $input_label, $input_value ) {
 		switch ( $input_type ) {
 			case 'checkbox':
-				$checked = '';
-				$disabled = '';
-				if ( isset( $options[ $field_id ] ) ) {
-					$checked = checked( $options[ $field_id ], 'on' , false );
-				}
+				$checked = checked( $input_value, 'on' , false );
 				echo '<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="' , $field_id , '">';
-				echo '<input type="checkbox" id="' , $field_id , '" name="' , $field_name , ']" class="mdl-checkbox__input" ' , $checked , ' ', $disabled , '>';
+				echo '<input type="checkbox" id="' , $field_id , '" name="' , $field_name , '" class="mdl-checkbox__input" ' , $checked , '>';
 				echo '<span class="mdl-checkbox__label">' , $input_label , '</span>';
 				echo '</label>';
 				break;
 			case 'disabled':
-				$checked = '';
-				$disabled = '';
-				if ( isset( $options[ $field_id ] ) ) {
-					$checked = checked( $options[ $field_id ], 'on', false );
-					$disabled = disabled( 1, 1, false );
-				}
+				$checked = checked( $input_value, 'on', false );
+				$disabled = disabled( 1, 1, false );
 				echo '<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="' , $field_id , '">';
-				echo '<input type="checkbox" id="' , $field_id , '" name="' , $field_name , ']" class="mdl-checkbox__input" ' , $checked , ' ', disabled( 1, 1, false ) , '>';
+				echo '<input type="checkbox" id="' , $field_id , '" name="' , $field_name , '" class="mdl-checkbox__input" ' , $checked , ' ', disabled( 1, 1, false ) , '>';
 				echo '<span class="mdl-checkbox__label">' , $input_label , '</span>';
 				echo '</label>';
 				break;
 			case 'text':
-				$value = '';
-				if ( isset( $options[ $field_id ] ) ) {
-					$value = esc_attr( $options[ $field_id ] );
-				}
+				$value = esc_attr( $input_value );
 				echo '<div class="mdl-textfield mdl-js-textfield">
 						<input class="mdl-textfield__input" type="text" id="' , $field_id . '" name="' , $field_name , '" value="' , $value , '">
 							<label class="mdl-textfield__label" for="' , $field_id , '">' , $input_label , '</label>
 							</div>';
 				break;
 			case 'media':
-				$value = '';
-				if ( isset( $options[ $field_id ] ) ) {
-					$value = esc_attr( $options[ $field_id ] );
-				}
+				$value = esc_attr( $input_value );
 				echo '<div class="mdl-textfield mdl-js-textfield">
 							<input class="mdl-textfield__input" type="text" id="' , $field_id . '" name="' , $field_name, '" value="' , $value , '">
 								<label class="mdl-textfield__label" for="' , $field_id , '">', $input_label , '</label>
@@ -110,11 +103,8 @@ class Material_Ui_Lite {
 				echo '</div>';
 				break;
 			case 'hidden':
-				$value = '';
-				if ( isset( $options[ $field_id ] ) ) {
-					$value = esc_attr( $options[ $field_id ] );
-				}
-				echo '<input type="hidden" id="choose-image-' , $field_id , '"name="' , $field_name , '" value="' , $value , '"></div>';
+				$value = esc_attr( $input_value );
+				echo '<input type="hidden" id="choose-image-' , $field_id , '"name="' , $field_name , '" value="' , $value , '">';
 				break;
 			default:
 				break;
